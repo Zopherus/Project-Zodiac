@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
+	private GameObject sprite;
+
 	//Movement variables
 	public float speed;
 	public float jump;
@@ -11,14 +13,21 @@ public class PlayerController : MonoBehaviour {
 	//Boolean to see if on the ground
 	bool grounded = true;
 
-	// Use this for initialization
-	void Update () {
+	void Start()
+	{
+		sprite = GameObject.Find ("Panel");
+	}
+
+	void Update () 
+	{
+		RectTransform transform = sprite.GetComponent<RectTransform> ();
 	
+		transform.position = this.GetComponent<RectTransform> ().position;
 		if (Input.GetKeyDown (KeyCode.Space) || Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown (KeyCode.W)) 
 		{
 			if(grounded)
 			{
-			GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
+				GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
 			}
 		}
 
@@ -45,6 +54,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		grounded = true;
 	}
+
 	void OnTriggerExit2D()
 	{
 		grounded = false;
