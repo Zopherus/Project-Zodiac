@@ -1,28 +1,47 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
+using System;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	private GameObject sprite;
+	private GameObject panel;
 
-	//Movement variables
-	public float speed;
-	public float jump;
+    //Movement variables
+    public float speed;
+    public float jump;
 	float moveVelocity;
 
-	//Boolean to see if on the ground
-	bool grounded = true;
+    //Boolean to see if on the ground
+    bool grounded;
+
+    public const float HealthBarOffsetHeight = 1.5f;  // The height that the health bar is above the character
 
 	void Start()
 	{
-		sprite = GameObject.Find ("Panel");
+		panel = GameObject.Find ("Panel");
+        grounded = false;
 	}
 
 	void Update () 
 	{
-		RectTransform transform = sprite.GetComponent<RectTransform> ();
-	
-		transform.position = this.GetComponent<RectTransform> ().position;
+		RectTransform panelTransform = panel.GetComponent<RectTransform> ();
+
+        Vector3[] corners = new Vector3[4];
+
+        panelTransform.GetWorldCorners(corners);
+
+
+        Vector3 vector = new Vector3(GetComponent<RectTransform>().position.x + (GetComponent<RectTransform>().rect.width / 2)  - (corners[2].x - corners[0].x)/2, transform.position.y + HealthBarOffsetHeight);
+        //Debug.Log(panelTransform.rect.width / 2);
+        Debug.Log(GetComponent<RectTransform>().position.x);
+
+
+
+
+        panelTransform.position = vector;
+
+
+
 		if (Input.GetKeyDown (KeyCode.Space) || Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown (KeyCode.W)) 
 		{
 			if(grounded)
@@ -31,32 +50,30 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		moveVelocity = 0;
-
 		//Left and right movement
 
 		if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-		{
-			moveVelocity = -speed;
-		}
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(-speed, GetComponent<Rigidbody2D>().velocity.y);
+        }
 
 		if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-		{
-			moveVelocity = speed;
-		}
-
-		GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(speed, GetComponent<Rigidbody2D>().velocity.y);
+        }
 	}
 
 	//Method to check if character is on the ground
 
-	void OnTriggerEnter2D()
+	void OnCollisionEnter2D(Collision2D other)
 	{
-		grounded = true;
+        if (other.gameObject  == GameObject.Find("Ground"))
+		    grounded = true;
 	}
 
-	void OnTriggerExit2D()
+	void OnCollisionExit2D(Collision2D other)
 	{
-		grounded = false;
-	}
+        if (other.gameObject == GameObject.Find("Ground"))
+            grounded = false;
+    }
 }

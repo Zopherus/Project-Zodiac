@@ -6,15 +6,16 @@ using System.Collections;
 
 public class ScrollingTextScript : MonoBehaviour {
 
-    Text scrollingText; //child text object
+    private Text scrollingText; //child text object
     private float timer;
     private System.Random rand; //random number generator
     const float REFRESH_CYCLE = 0.1f; //seconds per char refresh
     const float IMPORT_CYCLE = 60; //characters per import check
-    string importFilePath = "Assets\\SaveData\\ScrollingText.txt"; //path for scrolling text import
+    string importFilePath = "Assets/SaveData/ScrollingText.txt"; //path for scrolling text import
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         scrollingText = GetComponent<Text>();
         timer = REFRESH_CYCLE;
         rand = new System.Random();
@@ -34,6 +35,10 @@ public class ScrollingTextScript : MonoBehaviour {
         //every IMPORT_CYCLE number of chars, append new line of scrolling text
         if (scrollingText.text.Length < IMPORT_CYCLE)
         {
+            // Horribly inefficient, maybe just calculate it once and store it in the first line of the file or whatnot :: Eric
+            // Or just count by hand and update it whenever we add a new line
+            // It has to count the number of lines every update which is basically every frame
+
             StreamReader fileImport = new StreamReader(importFilePath); //access file at provided path
             int length = 0;
             string nextLine = fileImport.ReadLine();
@@ -46,6 +51,10 @@ public class ScrollingTextScript : MonoBehaviour {
 
             fileImport = new StreamReader(importFilePath);
             int randomMax = rand.Next(0, length);
+
+            // We might be able to just read the whole text file and then pick a random line from there
+            // Not sure which would be more efficient :: Eric
+
             for(int i = 0; i < randomMax; i++)//choose random number between 0 and length, skip that many lines
             {
                 fileImport.ReadLine();
