@@ -10,8 +10,8 @@ public class ScrollingTextScript : MonoBehaviour {
     private float timer;
     private System.Random rand; //random number generator
     const float REFRESH_CYCLE = 0.1f; //seconds per char refresh
-    const float IMPORT_CYCLE = 30; //characters per import check
-    string importFilePath = "ScrollingText.txt"; //path for scrolling text import
+    const float IMPORT_CYCLE = 60; //characters per import check
+    string importFilePath = "Assets\\SaveData\\ScrollingText.txt"; //path for scrolling text import
 
     // Use this for initialization
     void Start() {
