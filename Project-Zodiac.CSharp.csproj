@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\DayCycleScript.cs" />
+    <Compile Include="Assets\Scripts\MainTycoonScript.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\ReturnToMenuScript.cs" />
     <Compile Include="Assets\Scripts\ScrollingTextScript.cs" />
