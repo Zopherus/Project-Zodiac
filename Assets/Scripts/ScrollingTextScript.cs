@@ -6,12 +6,12 @@ using System.Collections;
 
 public class ScrollingTextScript : MonoBehaviour {
 
-    Text scrollingText; //child text object
+    private Text scrollingText; //child text object
     private float timer;
     private System.Random rand; //random number generator
-    const float REFRESH_CYCLE = 0.1f; //seconds per char refresh
-    const float IMPORT_CYCLE = 60; //characters per import check
-    string importFilePath = "Assets\\SaveData\\ScrollingText.txt"; //path for scrolling text import
+    private const float REFRESH_CYCLE = 0.1f; //seconds per char refresh
+    private const float IMPORT_CYCLE = 60; //characters per import check
+    private string importFilePath = "Assets\\SaveData\\ScrollingText.txt"; //path for scrolling text import
 
     // Use this for initialization
     void Start() {

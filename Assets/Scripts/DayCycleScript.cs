@@ -6,12 +6,11 @@ using System.Collections;
 
 public class DayCycleScript : MonoBehaviour {
 
-    DateTime calendar; //calender (for day and month references)
-    float timer;
-    Text calendarDayText; //child text object for days
-    Text calendarMonthText; //child text object for months
-
-    const float DAY_CYCLE = 10f; //seconds per day
+    private DateTime calendar; //calender (for day and month references)
+    private float timer;
+    private Text calendarDayText; //child text object for days
+    private Text calendarMonthText; //child text object for months
+    public const float DAY_CYCLE = 10f; //seconds per day
 
     // Use this for initialization
     void Start () {
