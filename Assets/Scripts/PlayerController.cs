@@ -1,6 +1,7 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
@@ -24,6 +25,9 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () 
 	{
+        float percentageHealth = (float)GetComponent<CharacterStats>().CurrentHealth / (float)GetComponent<CharacterStats>().MaximumHealth;
+
+        panel.GetComponent<Image>().fillAmount = percentageHealth;
 		RectTransform panelTransform = panel.GetComponent<RectTransform> ();
 
         Vector3[] corners = new Vector3[4];
@@ -32,8 +36,6 @@ public class PlayerController : MonoBehaviour {
 
 
         Vector3 vector = new Vector3(GetComponent<RectTransform>().position.x + (GetComponent<RectTransform>().rect.width / 2)  - (corners[2].x - corners[0].x)/2, transform.position.y + HealthBarOffsetHeight);
-        //Debug.Log(panelTransform.rect.width / 2);
-        Debug.Log(GetComponent<RectTransform>().position.x);
 
 
 
