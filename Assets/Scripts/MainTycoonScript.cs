@@ -40,28 +40,7 @@ public class MainTycoonScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //if player is busy, update timer
-        if(busy != "")
-        {
-            timer -= Time.deltaTime;
-            if(timer <= 0) //if timer reaches 0, player finishes event
-            {
-                //add money based and popualarity to player stas
-                switch(busy)
-                {
-                    case "sponsor speech":
-                        money += PROFIT_SPONSOR_SPEECH;
-                        UpdateMoney();
-                        break;
-                    case "super pac":
-                        money += PROFIT_SUPER_PAC;
-                        UpdateMoney();
-                        break;
-                }
-                //set busy back to zero
-                busy = "";
-            }
-        }
+        UpdateTimer();
 	}
 
     //Sponsor Speech event is bought
@@ -124,11 +103,67 @@ public class MainTycoonScript : MonoBehaviour {
         }
     }
 
+    //update timer and other time-related variables
+    private void UpdateTimer()
+    {
+        //if player is busy, update timer
+        if (busy != "")
+        {
+            timer -= Time.deltaTime;
+            UpdateStatusBar(timer / DAY_LENGTH); //update status bar, accounting for DAY_LENGTH
+            if (timer <= 0) //if timer reaches 0, player finishes event
+            {
+                //add money based and popualarity to player stas
+                switch (busy)
+                {
+                    case "sponsor speech":
+                        money += PROFIT_SPONSOR_SPEECH;
+                        UpdateMoney();
+                        break;
+                    case "super pac":
+                        money += PROFIT_SUPER_PAC;
+                        UpdateMoney();
+                        break;
+                }
+                //set busy back to zero
+                busy = "";
+            }
+        }
+    }
+
+    //update size of status bar
+    private void UpdateStatusBar(float timeRemainingEvent)
+    {
+        //get status bar and change x scale based on time elapsed
+        Vector3 scale = new Vector3(1, 1, 1);
+        //x scale will be time left divided by total time
+        switch(busy)
+        {
+            case "sponsor speech":
+                scale = new Vector3(timeRemainingEvent / TIME_SPONSOR_SPEECH, 1, 1);
+                break;
+            case "super pac":
+                scale = new Vector3(timeRemainingEvent / TIME_SUPER_PAC, 1, 1);
+                break;
+            case "town hall":
+                scale = new Vector3(timeRemainingEvent / TIME_TOWN_HALL, 1, 1);
+                break;
+            case "television ad":
+                scale = new Vector3(timeRemainingEvent / TIME_TELEVISION_AD, 1, 1);
+                break;
+            case "conference":
+                scale = new Vector3(timeRemainingEvent / TIME_CONFERENCE, 1, 1);
+                break;
+        }
+        var statusBar = this.transform.GetChild(0); //get status bar and apply changes
+        statusBar.transform.localScale = scale;
+    }
+
     //update amount of money displayed
-    public void UpdateMoney()
+    private void UpdateMoney()
     {
         //get text from child
-        Text yourStats = transform.GetChild(0).GetChild(0).GetComponent<Text>();
+        Text yourStats = transform.GetChild(1).GetChild(0).GetComponent<Text>();
 
         string[] lines = yourStats.text.Split('\n'); //split yourStats string into lines and edit relevant line
         lines[0] = "Money: $" + money.ToString();
