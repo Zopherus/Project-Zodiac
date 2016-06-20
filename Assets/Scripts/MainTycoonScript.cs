@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 using System.Globalization;
 using System.IO;
@@ -11,9 +12,10 @@ public class MainTycoonScript : MonoBehaviour
     private CalendarHandler calendar;
     private EventHandler events;
     private ScrollingTextHandler scrollingText;
+    public bool timeIsActive = true; //whether or not time goes by (ex. settings)
 
     //const variables
-    const float DAY_LENGTH = 1f;
+    const float DAY_LENGTH = 1f; //length of 1 day in seconds `
 
     // Use this for initialization
     void Awake()
@@ -28,45 +30,69 @@ public class MainTycoonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        events.UpdateTimer(this);
-        calendar.UpdateCalendar();
-        scrollingText.UpdateScrollingText();
+        if (timeIsActive)
+        {
+            events.UpdateTimer(this);
+            calendar.UpdateCalendar();
+            scrollingText.UpdateScrollingText();
+        }
+    }
+
+    //opens settings
+    public void Settings()
+    {
+        timeIsActive = false;
     }
 
     //Switch Scene to MainMenuScene
     public void ExitToMenu()
     {
-        Application.LoadLevel("MainMenuScene");
+        SceneManager.LoadScene("MainMenuScene");
     }
 
     //call sponsor speech from EventHandler class instance
     public void TriggerSponsorSpeech()
     {
-        events.SponsorSpeech();
+        if (timeIsActive)
+        {
+            events.SponsorSpeech();
+        }
     }
 
     //call super PAC from EventHandler class instance
     public void TriggerSuperPAC()
     {
-        events.SuperPAC();
+        if (timeIsActive)
+        {
+            events.SuperPAC();
+        }
     }
 
     //call town hall from EventHandler class instance
     public void TriggerTownHall()
     {
-        events.TownHall(this);
+        if (timeIsActive)
+        {
+            events.TownHall(this);
+        }
     }
 
     //call television ad from EventHandler class instance
     public void TriggerTelevisionAd()
     {
-        events.TelevisionAd(this);
+        if (timeIsActive)
+        {
+            events.TelevisionAd(this);
+        }
     }
 
     //call conference from EventHandler class instance
     public void TriggerConference()
     {
-        events.Conference(this);
+        if (timeIsActive)
+        {
+            events.Conference(this);
+        }
     }
 
     //gets policy values from policy scripts
@@ -108,8 +134,13 @@ public class PopularityManager
     public void UpdatePopularity(MainTycoonScript script, float[] values, float differenceMultiplier)
     {
         float difference = 0;
+        PolicyScript[] policyScripts = script.transform.FindChild("Canvas").FindChild("Policies").GetComponentsInChildren<PolicyScript>();
         for (int i = 0; i < values.Length; i++)
         {
+            //update the median in each policy script
+            policyScripts[i].UpdateMedian();
+
+            //get overall difference (sum of all 4 differences for policy)
             float tempDif = values[i] - policyFactors[currentState, i];
             difference += tempDif;
         }

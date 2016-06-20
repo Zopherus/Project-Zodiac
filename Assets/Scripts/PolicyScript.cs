@@ -23,8 +23,11 @@ public class PolicyScript : MonoBehaviour {
 
     public void IncreaseValue()
     {
+        //get bool active from MainTycoonScript
+        bool active = transform.parent.parent.parent.GetComponent<MainTycoonScript>().timeIsActive;
+
         //only increase if doing so won't make it go past maxDifference from median
-        if(value + 1 <= medianValue + maxDifference)
+        if (value + 1 <= medianValue + maxDifference && active)
         {
             value++;
         }
@@ -33,8 +36,11 @@ public class PolicyScript : MonoBehaviour {
 
     public void DecreaseValue()
     {
+        //get bool active from MainTycoonScript
+        bool active = transform.parent.parent.parent.GetComponent<MainTycoonScript>().timeIsActive;
+
         //only increase if doing so won't make it go past maxDifference from median
-        if (value - 1 >= medianValue - maxDifference)
+        if (value - 1 >= medianValue - maxDifference && active)
         {
             value--;
         }
@@ -44,5 +50,11 @@ public class PolicyScript : MonoBehaviour {
     public void UpdateValueText(float newValue)
     {
         text.text = newValue.ToString();
+    }
+
+    //update median with current value
+    public void UpdateMedian()
+    {
+        medianValue = value;
     }
 }
