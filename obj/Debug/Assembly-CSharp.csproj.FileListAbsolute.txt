@@ -1,0 +1,2 @@
+C:\Users\Local Admin\Desktop\Project-Zodiac\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+C:\Users\Local Admin\Desktop\Project-Zodiac\obj\Debug\Assembly-CSharp.dll
