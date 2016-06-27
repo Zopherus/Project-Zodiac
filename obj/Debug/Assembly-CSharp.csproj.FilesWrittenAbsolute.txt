@@ -1,0 +1,17 @@
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Assembly-CSharp.dll
+/Users/rayfung/Desktop/Project-Zodiac/obj/Debug/Assembly-CSharp.dll
+/Users/rayfung/Desktop/Project-Zodiac/obj/Debug/Assembly-CSharp.dll.mdb
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/UnityEngine.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/UnityEditor.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Mono.Cecil.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Unity.DataContract.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/rayfung/Desktop/Project-Zodiac/Temp/bin/Debug/Mono.Cecil.Mdb.dll

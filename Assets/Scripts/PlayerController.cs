@@ -1,81 +1,133 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
-	private GameObject panel;
+	private GameObject sprite;
 
-    //Movement variables
-    public float speed;
-    public float jump;
+	//Movement variables
+	public float speed;
+	public float jump;
 	float moveVelocity;
 
-    //Boolean to see if on the ground
-    bool grounded;
+	//Boolean to see if on the ground
+	bool grounded = true;
+	Animator animator;
+	bool direction;
+	bool moving;
 
-    public const float HealthBarOffsetHeight = 1.5f;  // The height that the health bar is above the character
+    //Variables related to the shooting
+    float timer = 3.0f;
+    float reload = 1.5f;
+    bool singleFire;
 
 	void Start()
 	{
-		panel = GameObject.Find ("Panel");
-        grounded = false;
+		animator = GetComponent<Animator> ();
+		direction = true;
 	}
 
 	void Update () 
 	{
-        float percentageHealth = (float)GetComponent<CharacterStats>().CurrentHealth / (float)GetComponent<CharacterStats>().MaximumHealth;
-
-        panel.GetComponent<Image>().fillAmount = percentageHealth;
-		RectTransform panelTransform = panel.GetComponent<RectTransform> ();
-
-        Vector3[] corners = new Vector3[4];
-
-        panelTransform.GetWorldCorners(corners);
-
-
-        Vector3 vector = new Vector3(GetComponent<RectTransform>().position.x + (GetComponent<RectTransform>().rect.width / 2)  - (corners[2].x - corners[0].x)/2, transform.position.y + HealthBarOffsetHeight);
-
-
-
-
-        panelTransform.position = vector;
-
-
-
 		if (Input.GetKeyDown (KeyCode.Space) || Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown (KeyCode.W)) 
 		{
-			if(grounded)
+			if(grounded & direction)
 			{
 				GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
+				animator.SetTrigger ("jumpRight");
+			}
+
+			if (grounded & !direction)
+			{
+				GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
+				animator.SetTrigger ("jumpLeft");
 			}
 		}
+			
+		animator.SetBool ("onGround", grounded);
+
+		moveVelocity = 0;
 
 		//Left and right movement
 
 		if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(-speed, GetComponent<Rigidbody2D>().velocity.y);
-        }
+		{
+			moveVelocity = -speed;
+
+			animator.SetTrigger ("movingStart");
+
+			direction = false;
+            animator.SetBool("direction", direction);
+
+			moving = true;
+			animator.SetBool ("moving", moving);
+
+
+		}
+
+		if (Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.A)) 
+		{
+			moving = false;
+			animator.SetBool ("moving", moving);
+		}
 
 		if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+		{
+			moveVelocity = speed;
+
+			animator.SetTrigger ("movingStart");
+
+			direction = true;
+            animator.SetBool("direction", direction);
+
+			moving = true;
+			animator.SetBool ("moving", moving);
+
+		}
+
+		if (Input.GetKeyUp (KeyCode.RightArrow) || Input.GetKeyUp (KeyCode.D)) 
+		{
+			moving = false;
+			animator.SetBool ("moving", moving);
+		}
+
+
+        //Testing to see if shooting works
+        if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & direction)
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(speed, GetComponent<Rigidbody2D>().velocity.y);
+            animator.SetTrigger("shoot");
+            GameObject bacon = Instantiate<GameObject>(transform.FindChild("Bacon").gameObject);
+            bacon.SetActive(true);
+            bacon.transform.position = transform.FindChild("spawnPoint").position;
+            reload = .5f;
         }
+
+        if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & !direction)
+        {
+            animator.SetTrigger("shoot");
+            this.GetComponent<SpriteRenderer>().flipX = direction;
+            GameObject bacon = Instantiate<GameObject>(transform.FindChild("Bacon").gameObject);
+            bacon.SetActive(true);
+            bacon.transform.position = transform.FindChild("spawnPoint").position;
+            reload = .5f;
+            transform.FindChild("Bacon").GetComponent<BulletScript>().bulletSpeed *= -1;
+        }
+
+        reload = reload - Time.deltaTime;
+
+
+		GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
 	}
 
 	//Method to check if character is on the ground
 
-	void OnCollisionEnter2D(Collision2D other)
+	void OnTriggerEnter2D()
 	{
-        if (other.gameObject  == GameObject.Find("Ground"))
-		    grounded = true;
+		grounded = true;
 	}
 
-	void OnCollisionExit2D(Collision2D other)
+	void OnTriggerExit2D()
 	{
-        if (other.gameObject == GameObject.Find("Ground"))
-            grounded = false;
-    }
+		grounded = false;
+	}
 }
