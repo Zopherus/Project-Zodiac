@@ -8,14 +8,18 @@ using System.Collections;
 
 public class MainTycoonScript : MonoBehaviour
 {
+    //character enum
+    public enum Character { Trump, Cruz, Clinton, Sanders };
     //class instances
     private CalendarHandler calendar;
     private EventHandler events;
     private ScrollingTextHandler scrollingText;
+    //variables
+    static public Character currentCharacter = Character.Cruz;
     public bool timeIsActive = true; //whether or not time goes by (ex. settings)
 
     //const variables
-    const float DAY_LENGTH = 1f; //length of 1 day in seconds `
+    const float DAY_LENGTH = 10f; //length of 1 day in seconds
 
     // Use this for initialization
     void Awake()
@@ -27,22 +31,72 @@ public class MainTycoonScript : MonoBehaviour
         scrollingText = new ScrollingTextHandler(this);
     }
 
+    void OnLevelWasLoaded(int level)
+    {
+        //if this level was loaded, initialize icon and reactivate time variable
+        if (level == 1)
+        {
+            //reactivate timeIsActive
+            timeIsActive = true;
+            //initialize character icon
+            GameObject trumpIcon = transform.Find("Canvas").Find("Icon").FindChild("Trump").gameObject;
+            GameObject cruzIcon = transform.Find("Canvas").Find("Icon").FindChild("Cruz").gameObject;
+            GameObject sandersIcon = transform.Find("Canvas").Find("Icon").FindChild("Sanders").gameObject;
+            GameObject clintonIcon = transform.Find("Canvas").Find("Icon").FindChild("Clinton").gameObject;
+            switch (currentCharacter)
+            {
+                case Character.Trump:
+                    trumpIcon.SetActive(true);
+                    cruzIcon.SetActive(false);
+                    sandersIcon.SetActive(false);
+                    clintonIcon.SetActive(false);
+                    break;
+                case Character.Cruz:
+                    cruzIcon.SetActive(true);
+                    trumpIcon.SetActive(false);
+                    sandersIcon.SetActive(false);
+                    clintonIcon.SetActive(false);
+                    break;
+                case Character.Sanders:
+                    sandersIcon.SetActive(true);
+                    trumpIcon.SetActive(false);
+                    cruzIcon.SetActive(false);
+                    clintonIcon.SetActive(false);
+                    break;
+                case Character.Clinton:
+                    clintonIcon.SetActive(true);
+                    trumpIcon.SetActive(false);
+                    cruzIcon.SetActive(false);
+                    sandersIcon.SetActive(false);
+                    break;
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (timeIsActive)
         {
             events.UpdateTimer(this);
+            if(calendar.numDays % 7 == 0 && calendar.numDays > 0)
+            {
+                timeIsActive = false;
+                SceneManager.LoadScene("Fighting Scene");
+            }
             calendar.UpdateCalendar();
             scrollingText.UpdateScrollingText();
         }
     }
 
+    //Deprecated
+    //***************************
     //opens settings
     public void Settings()
     {
         timeIsActive = false;
     }
+    //****************************
 
     //Switch Scene to MainMenuScene
     public void ExitToMenu()
@@ -168,6 +222,7 @@ public class PopularityManager
 //class for handling calendar/date actions
 public class CalendarHandler
 {
+    public int numDays; //public access var for number of days
     private DateTime calendar; //calender (for day and month references)
     private float timer; //time until next day
     private Text calendarDayText; //child text object for days
@@ -190,6 +245,7 @@ public class CalendarHandler
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
+            numDays++;
             calendar = calendar.AddDays(1.0);
             calendarDayText.text = calendar.Day.ToString(); //update calendar graphic
             calendarMonthText.text = new DateTimeFormatInfo().GetAbbreviatedMonthName(calendar.Month);
@@ -210,21 +266,21 @@ public class EventHandler
 
     //constant variables for events
     private const int PROFIT_SPONSOR_SPEECH = 200; //money made from sponsor speech
-    private const int TIME_SPONSOR_SPEECH = 1; //time for sponsor speech in days
+    private const float TIME_SPONSOR_SPEECH = 0.5f; //time for sponsor speech in days
 
     private const int PROFIT_SUPER_PAC = 500; //money made from super PAC
-    private const int TIME_SUPER_PAC = 2; //time for super PAC in days
+    private const float TIME_SUPER_PAC = 1f; //time for super PAC in days
 
     private const int COST_TOWN_HALL = 100; //cost of town hall
-    private const int TIME_TOWN_HALL = 3; //time for town hall in days
+    private const float TIME_TOWN_HALL = 1.5f; //time for town hall in days
     private const float MULTIPLIER_TIME_HALL = 0.75f;
 
     private const int COST_TELEVISION_AD = 1000; //cost of television ad
-    private const int TIME_TELEVISION_AD = 2; //time for television ad in days
+    private const float TIME_TELEVISION_AD = 1f; //time for television ad in days
     private const float MULTIPLIER_TELEVISION_AD = 1.5f;
 
     private const int COST_CONFERENCE = 300; //money made from sponsor speech
-    private const int TIME_CONFERENCE = 6; //time for conference in days
+    private const float TIME_CONFERENCE = 3f; //time for conference in days
     private const float MULTIPLIER_CONFERENCE = 1.5f;
 
     public EventHandler(float dayLength)
