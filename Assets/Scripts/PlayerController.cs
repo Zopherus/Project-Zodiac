@@ -16,6 +16,11 @@ public class PlayerController : MonoBehaviour {
 	bool direction;
 	bool moving;
 
+    //Variables related to the shooting
+    float timer = 3.0f;
+    float reload = 1.5f;
+    bool singleFire;
+
 	void Start()
 	{
 		animator = GetComponent<Animator> ();
@@ -49,13 +54,15 @@ public class PlayerController : MonoBehaviour {
 		{
 			moveVelocity = -speed;
 
-			animator.SetTrigger ("faceLeft");
 			animator.SetTrigger ("movingStart");
+
+			direction = false;
+            animator.SetBool("direction", direction);
 
 			moving = true;
 			animator.SetBool ("moving", moving);
 
-			direction = false;
+
 		}
 
 		if (Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.A)) 
@@ -68,13 +75,14 @@ public class PlayerController : MonoBehaviour {
 		{
 			moveVelocity = speed;
 
-			animator.SetTrigger ("faceRight");
 			animator.SetTrigger ("movingStart");
+
+			direction = true;
+            animator.SetBool("direction", direction);
 
 			moving = true;
 			animator.SetBool ("moving", moving);
 
-			direction = true;
 		}
 
 		if (Input.GetKeyUp (KeyCode.RightArrow) || Input.GetKeyUp (KeyCode.D)) 
@@ -82,6 +90,31 @@ public class PlayerController : MonoBehaviour {
 			moving = false;
 			animator.SetBool ("moving", moving);
 		}
+
+
+        //Testing to see if shooting works
+        if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & direction)
+        {
+            animator.SetTrigger("shoot");
+            GameObject bacon = Instantiate<GameObject>(transform.FindChild("Bacon").gameObject);
+            bacon.SetActive(true);
+            bacon.transform.position = transform.FindChild("spawnPoint").position;
+            reload = .5f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & !direction)
+        {
+            animator.SetTrigger("shoot");
+            this.GetComponent<SpriteRenderer>().flipX = direction;
+            GameObject bacon = Instantiate<GameObject>(transform.FindChild("Bacon").gameObject);
+            bacon.SetActive(true);
+            bacon.transform.position = transform.FindChild("spawnPoint").position;
+            reload = .5f;
+            transform.FindChild("Bacon").GetComponent<BulletScript>().bulletSpeed *= -1;
+        }
+
+        reload = reload - Time.deltaTime;
+
 
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
 	}

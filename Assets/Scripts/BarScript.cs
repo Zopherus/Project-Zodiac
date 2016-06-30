@@ -4,13 +4,23 @@ using UnityEngine.UI;
 
 public class BarScript : MonoBehaviour {
 
-
-	[SerializeField]
 	private float fillAmount;
+
+    [SerializeField]
+    private float lerpSpeed;
 
 	[SerializeField]
 	private Image Content;
 
+    public float MaxValue { get; set; }
+
+    public float Value
+    {
+        set
+        {
+            fillAmount = Map(value, 0, MaxValue, 0, 1);
+        }
+    }
 	// Use this for initialization
 	void Start () 
 	{
@@ -25,7 +35,10 @@ public class BarScript : MonoBehaviour {
 
 	private void handleBars()
 	{
-		Content.fillAmount = Map (180, 0, 230, 0, 1);
+        if (fillAmount != Content.fillAmount)
+        {
+            Content.fillAmount = Mathf.Lerp(Content.fillAmount, fillAmount, Time.deltaTime * lerpSpeed);
+        }
 	}
 
 

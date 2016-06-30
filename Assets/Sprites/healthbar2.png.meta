@@ -1,0 +1,311 @@
+fileFormatVersion: 2
+guid: eef346c5a2f6caa4397930b94b4f8210
+timeCreated: 1464245906
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: healthbar2_0
+    21300002: healthbar2_1
+    21300004: healthbar2_2
+    21300006: healthbar2_3
+    21300008: healthbar2_4
+    21300010: healthbar2_5
+    21300012: healthbar2_6
+    21300014: healthbar2_7
+    21300016: healthbar2_8
+    21300018: healthbar2_9
+    21300020: healthbar2_10
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: healthbar2_0
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 3106
+        width: 1195
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 154.98148, y: -29.407349}
+        - {x: 180.98148, y: -32.40735}
+        - {x: 330.98148, y: -32.40735}
+        - {x: 354.98148, y: 0.59265137}
+        - {x: 354.98148, y: 33.59265}
+        - {x: -354.01852, y: 33.59265}
+        - {x: -354.01852, y: -3.4073486}
+        - {x: -325.01852, y: -32.40735}
+        - {x: 145.98148, y: -32.40735}
+    - name: healthbar2_1
+      rect:
+        serializedVersion: 2
+        x: 1563
+        y: 3104
+        width: 1210
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 348.22223, y: -27.59253}
+        - {x: 359.22223, y: 5.4074707}
+        - {x: 359.22223, y: 39.40747}
+        - {x: -358.77777, y: 39.40747}
+        - {x: -358.77777, y: -2.5925293}
+        - {x: -331.77777, y: -35.59253}
+        - {x: -319.77777, y: -38.59253}
+        - {x: 324.22223, y: -38.59253}
+    - name: healthbar2_2
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 2539
+        width: 1189
+        height: 116
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 348.5926, y: 13.592651}
+        - {x: 349.5926, y: 14.592651}
+        - {x: 353.5926, y: 34.59265}
+        - {x: 352.5926, y: 35.59265}
+        - {x: -330.4074, y: 35.59265}
+        - {x: -340.4074, y: 29.592651}
+        - {x: -348.4074, y: 22.592651}
+        - {x: -352.4074, y: 12.592651}
+        - {x: -352.4074, y: -13.407349}
+        - {x: -343.4074, y: -26.407349}
+        - {x: -337.4074, y: -30.407349}
+        - {x: -328.4074, y: -34.40735}
+        - {x: 353.5926, y: -34.40735}
+        - {x: 353.5926, y: -26.407349}
+        - {x: 349.5926, y: -9.407349}
+    - name: healthbar2_3
+      rect:
+        serializedVersion: 2
+        x: 1590
+        y: 2539
+        width: 1190
+        height: 116
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 353.22223, y: -11.407349}
+        - {x: 353.22223, y: 11.592651}
+        - {x: 351.22223, y: 18.592651}
+        - {x: 338.22223, y: 32.59265}
+        - {x: 330.22223, y: 35.59265}
+        - {x: -351.77777, y: 35.59265}
+        - {x: -352.77777, y: 34.59265}
+        - {x: -352.77777, y: 31.592651}
+        - {x: -349.77777, y: 13.592651}
+        - {x: -347.77777, y: 13.592651}
+        - {x: -349.77777, y: -13.407349}
+        - {x: -352.77777, y: -25.407349}
+        - {x: -352.77777, y: -34.40735}
+        - {x: 326.22223, y: -34.40735}
+        - {x: 333.22223, y: -32.40735}
+        - {x: 339.22223, y: -29.407349}
+        - {x: 350.22223, y: -17.407349}
+    - name: healthbar2_4
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 1984
+        width: 1160
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 344.22223, y: 23.703735}
+        - {x: -326.77777, y: 23.703735}
+        - {x: -335.77777, y: 19.703735}
+        - {x: -341.77777, y: 13.703735}
+        - {x: -343.77777, y: 8.703735}
+        - {x: -343.77777, y: -8.296265}
+        - {x: -335.77777, y: -20.296265}
+        - {x: -329.77777, y: -22.296265}
+        - {x: 344.22223, y: -22.296265}
+    - name: healthbar2_5
+      rect:
+        serializedVersion: 2
+        x: 1621
+        y: 1984
+        width: 1160
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 344.5926, y: 16.703735}
+        - {x: 343.5926, y: 19.703735}
+        - {x: 335.5926, y: 20.703735}
+        - {x: 328.5926, y: 23.703735}
+        - {x: -343.4074, y: 23.703735}
+        - {x: -343.4074, y: -22.296265}
+        - {x: 332.5926, y: -22.296265}
+        - {x: 343.5926, y: -13.296265}
+        - {x: 344.5926, y: -13.296265}
+    - name: healthbar2_6
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 1408
+        width: 1160
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 3, z: 0, w: 3}
+      outline:
+      - - {x: -330.77777, y: 23.370361}
+        - {x: -341.77777, y: 14.370361}
+        - {x: -343.77777, y: 9.370361}
+        - {x: -343.77777, y: -10.629639}
+        - {x: -338.77777, y: -16.629639}
+        - {x: -329.77777, y: -22.629639}
+        - {x: 344.22223, y: -22.629639}
+        - {x: 344.22223, y: 23.370361}
+    - name: healthbar2_7
+      rect:
+        serializedVersion: 2
+        x: 1621
+        y: 1408
+        width: 1160
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 1, z: 0, w: 2}
+      outline:
+      - - {x: 344.5926, y: 12.370361}
+        - {x: 333.5926, y: 22.370361}
+        - {x: 326.5926, y: 23.370361}
+        - {x: -343.4074, y: 23.370361}
+        - {x: -343.4074, y: 10.370361}
+        - {x: -342.4074, y: -4.6296387}
+        - {x: -343.4074, y: -12.629639}
+        - {x: -343.4074, y: -22.629639}
+        - {x: 331.5926, y: -22.629639}
+        - {x: 341.5926, y: -15.629639}
+        - {x: 344.5926, y: -10.629639}
+    - name: healthbar2_8
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 836
+        width: 1160
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 3, z: 0, w: 1}
+      outline:
+      - - {x: 343.22223, y: 13.90741}
+        - {x: 344.22223, y: 14.90741}
+        - {x: 344.22223, y: 22.90741}
+        - {x: -328.77777, y: 22.90741}
+        - {x: -335.77777, y: 19.90741}
+        - {x: -341.77777, y: 13.90741}
+        - {x: -343.77777, y: 8.90741}
+        - {x: -343.77777, y: -8.09259}
+        - {x: -336.77777, y: -19.09259}
+        - {x: -328.77777, y: -22.09259}
+        - {x: 344.22223, y: -22.09259}
+        - {x: 344.22223, y: -9.09259}
+    - name: healthbar2_9
+      rect:
+        serializedVersion: 2
+        x: 1623
+        y: 837
+        width: 1160
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 1, z: 0, w: 4}
+      outline:
+      - - {x: 345.27777, y: 8}
+        - {x: 342.27777, y: 13}
+        - {x: 330.27777, y: 22}
+        - {x: 324.27777, y: 23}
+        - {x: -343.72223, y: 23}
+        - {x: -343.72223, y: -23}
+        - {x: 329.27777, y: -23}
+        - {x: 333.27777, y: -21}
+        - {x: 343.27777, y: -11}
+        - {x: 345.27777, y: -5}
+    - name: healthbar2_10
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 119
+        width: 337
+        height: 337
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 100.09259, y: 39.018517}
+        - {x: 73.09259, y: 78.01852}
+        - {x: 43.09259, y: 97.01852}
+        - {x: 29.09259, y: 101.01852}
+        - {x: -46.90741, y: 101.01852}
+        - {x: -99.90741, y: 49.018517}
+        - {x: -99.90741, y: -43.981483}
+        - {x: -98.90741, y: -50.981483}
+        - {x: -47.90741, y: -99.98148}
+        - {x: 46.09259, y: -99.98148}
+        - {x: 58.09259, y: -97.98148}
+        - {x: 99.09259, y: -45.981483}
+        - {x: 101.09259, y: -34.981483}
+        - {x: 101.09259, y: 29.018517}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
