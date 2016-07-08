@@ -6,7 +6,6 @@ public class BulletScript : MonoBehaviour {
 
     public float bulletSpeed;
     public float timer = 3.0f;
-    public float reload = 1.5f;
 
 	// Use this for initialization
 	void Start () {

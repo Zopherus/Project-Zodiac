@@ -61,8 +61,6 @@ public class PlayerController : MonoBehaviour {
 
 			moving = true;
 			animator.SetBool ("moving", moving);
-
-
 		}
 
 		if (Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.A)) 
@@ -82,7 +80,6 @@ public class PlayerController : MonoBehaviour {
 
 			moving = true;
 			animator.SetBool ("moving", moving);
-
 		}
 
 		if (Input.GetKeyUp (KeyCode.RightArrow) || Input.GetKeyUp (KeyCode.D)) 
@@ -96,7 +93,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & direction)
         {
             animator.SetTrigger("shoot");
-            GameObject bacon = Instantiate<GameObject>(transform.FindChild("Bacon").gameObject);
+            GameObject bacon = Instantiate<GameObject>(transform.FindChild("Projectile").gameObject);
             bacon.SetActive(true);
             bacon.transform.position = transform.FindChild("spawnPoint").position;
             reload = .5f;
@@ -104,19 +101,30 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & !direction)
         {
+            transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
             animator.SetTrigger("shoot");
-            this.GetComponent<SpriteRenderer>().flipX = direction;
-            GameObject bacon = Instantiate<GameObject>(transform.FindChild("Bacon").gameObject);
-            bacon.SetActive(true);
-            bacon.transform.position = transform.FindChild("spawnPoint").position;
+            GameObject projectile = Instantiate<GameObject>(transform.FindChild("Projectile").gameObject);
+            projectile.SetActive(true);
+            projectile.transform.position = transform.FindChild("spawnPoint left").position;
             reload = .5f;
-            transform.FindChild("Bacon").GetComponent<BulletScript>().bulletSpeed *= -1;
+            transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
+        }
+
+
+        //Testing to see if punching works
+        if(Input.GetKeyDown(KeyCode.P) & direction)
+        {
+            animator.SetTrigger("punch");
+        }
+
+        if(Input.GetKeyDown(KeyCode.P) & !direction)
+        {
+            animator.SetTrigger("punch");
         }
 
         reload = reload - Time.deltaTime;
 
-
-		GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
+        GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
 	}
 
 	//Method to check if character is on the ground

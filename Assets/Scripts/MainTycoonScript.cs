@@ -10,6 +10,7 @@ public class MainTycoonScript : MonoBehaviour
 {
     //character enum
     public enum Character { Trump, Cruz, Clinton, Sanders };
+    public enum eventsButtons { Clear, SponsorSpeech, SuperPAC, TownHall, TelevisionAd, Conference };
     //class instances
     private CalendarHandler calendar;
     private EventHandler events;
@@ -17,6 +18,9 @@ public class MainTycoonScript : MonoBehaviour
     //variables
     static public Character currentCharacter = Character.Cruz;
     public bool timeIsActive = true; //whether or not time goes by (ex. settings)
+    private Text highlightText; //text object for displaying highlightText
+    private Text stateText; //text object for displaying state info
+    private State[] states = new State[10];
 
     //const variables
     const float DAY_LENGTH = 10f; //length of 1 day in seconds
@@ -29,6 +33,14 @@ public class MainTycoonScript : MonoBehaviour
         calendar = new CalendarHandler(this, DAY_LENGTH, components[0], components[1]);
         events = new EventHandler(DAY_LENGTH);
         scrollingText = new ScrollingTextHandler(this);
+        highlightText = GameObject.Find("HighlightText").GetComponent<Text>();
+        stateText = GameObject.Find("StateText").GetComponent<Text>();
+        System.Random r = new System.Random(); //seed rng outside of loop (otherwise, each rng will be seeded with the same or close to the same values -> not random AT ALL)
+        for (int i = 0; i < states.Length; i++)
+        {
+            states[i] = new State(i.ToString(), r); //iniatialize each state and seed it randomly
+        }
+        changeState(1); //display first state
     }
 
     void OnLevelWasLoaded(int level)
@@ -76,16 +88,70 @@ public class MainTycoonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //update time and calendar
         if (timeIsActive)
         {
             events.UpdateTimer(this);
-            if(calendar.numDays % 7 == 0 && calendar.numDays > 0)
+            if(calendar.numDays % 6 == 0 && calendar.numDays > 0)
             {
-                timeIsActive = false;
+                timeIsActive = false; //after 6 days, trigger FightingScene (as soon as 7th day begins, this is triggered)
                 SceneManager.LoadScene("Fighting Scene");
             }
             calendar.UpdateCalendar();
             scrollingText.UpdateScrollingText();
+        }
+    }
+
+    public void changeState(int state)
+    {
+        stateText.text = states[state - 1].name + "\n";
+        stateText.text += states[state - 1].numDelegates + " delegates" + "\n";
+        for(int i = 0; i < events.POLICY_LEANINGS_NAMES.Length; i++)
+        {
+            stateText.text += events.POLICY_LEANINGS_NAMES[i] + ": ";
+            if(states[state - 1].policyLeanings[i] < 45) //between 0 and 45 (liberal)
+            {
+                stateText.text += "liberal\n";
+            }
+            else if(states[state - 1].policyLeanings[i] > 55) //between 55 and 100 (conservative)
+            {
+                stateText.text += "conservative\n";
+            }
+            else //between 45 and 55 (moderate)
+            {
+                stateText.text += "moderate\n";
+            }
+            if(states[state - 1].fightFinished)
+            {
+                if(states[state - 1].won) { stateText.text += "You have WON this state"; } // player has won this state
+                else { stateText.text += "You have LOST this state"; } //player has lost this state
+            }
+        }
+    }
+
+    //change text when highlightd
+    public void changehHighlightsText(string _event)
+    {
+        switch(_event)
+        {
+            case "Clear":
+                highlightText.text = "";
+                break;
+            case "SponsorSpeech":
+                highlightText.text = "Give a speech to your sponsors!\nTakes 0.5 day\nReturns $200";
+                break;
+            case "SuperPAC":
+                highlightText.text = "Expand your Super PAC!\nTakes 1 day\nReturns $500";
+                break;
+            case "TownHall":
+                highlightText.text = "Take part in a Town Hall meeting!\nTakes 1.5 days\nCosts $100\nModerately effective";
+                break;
+            case "TelevisionAd":
+                highlightText.text = "Release a TV Ad!\nTakes 1 day\nCosts $1000\nVery effective";
+                break;
+            case "Conference":
+                highlightText.text = "Host a fully fledged conference!\nTakes 3 days\nCosts $300\nVery effective";
+                break;
         }
     }
 
@@ -224,33 +290,43 @@ public class CalendarHandler
 {
     public int numDays; //public access var for number of days
     private DateTime calendar; //calender (for day and month references)
-    private float timer; //time until next day
+    private float dayTimer; //time until next day
     private Text calendarDayText; //child text object for days
     private Text calendarMonthText; //child text object for months
-    public float DAY_CYCLE; //seconds per day
+    public float dayCycle; //seconds per day
+    private Text sceneTimerTime; //timer text in scene (for displaying time until next fight)
+    private Text sceneTimerDays; //timer text in scene (for displaying days until next fight)
 
     public CalendarHandler(MainTycoonScript script, float dayLength, Text dayText, Text monthText)
     {
         calendar = new DateTime(2016, 4, 20);
-        DAY_CYCLE = dayLength;
-        timer = DAY_CYCLE;
+        dayCycle = dayLength;
+        dayTimer = dayCycle;
 
         calendarDayText = dayText;
         calendarMonthText = monthText;
+        sceneTimerTime = GameObject.Find("TimeUntil").gameObject.GetComponent<Text>();
+        sceneTimerDays = GameObject.Find("DaysUntil").gameObject.GetComponent<Text>();
     }
 
     public void UpdateCalendar()
     {
         //every 10 seconds, change the day
-        timer -= Time.deltaTime;
-        if (timer <= 0)
+        dayTimer -= Time.deltaTime;
+        if (dayTimer <= 0)
         {
             numDays++;
             calendar = calendar.AddDays(1.0);
             calendarDayText.text = calendar.Day.ToString(); //update calendar graphic
             calendarMonthText.text = new DateTimeFormatInfo().GetAbbreviatedMonthName(calendar.Month);
-            timer = DAY_CYCLE;
+            dayTimer = dayCycle;
         }
+        //update mainTimer in scene
+        int totalSecondsLeft = (int)((5 - numDays) * dayCycle + dayTimer);
+        string minutes = (totalSecondsLeft / 60).ToString("D2");
+        string seconds = (totalSecondsLeft % 60).ToString("D2");
+        sceneTimerTime.text = "TIME UNTIL NEXT FIGHT: " + minutes + ":" + seconds;
+        sceneTimerDays.text = "DAYS UNTIL NEXT FIGHT: " + (6 - numDays).ToString();
     }
 }
 
@@ -263,6 +339,8 @@ public class EventHandler
     private float timer; //stores time until no longer busy
     private float DAY_LENGTH; //length of day (get from main script)
     private PopularityManager popularity;
+
+    public readonly string[] POLICY_LEANINGS_NAMES = { "Foreign Policy", "Social Policy", "Economic Policy", "Charisma" };
 
     //constant variables for events
     private const int PROFIT_SPONSOR_SPEECH = 200; //money made from sponsor speech
@@ -279,7 +357,7 @@ public class EventHandler
     private const float TIME_TELEVISION_AD = 1f; //time for television ad in days
     private const float MULTIPLIER_TELEVISION_AD = 1.5f;
 
-    private const int COST_CONFERENCE = 300; //money made from sponsor speech
+    private const int COST_CONFERENCE = 300; //cost of conference
     private const float TIME_CONFERENCE = 3f; //time for conference in days
     private const float MULTIPLIER_CONFERENCE = 1.5f;
 
@@ -487,5 +565,23 @@ public class ScrollingTextHandler
             scrollingText.text = scrollingText.text + "  |  " + lineToAppend; //add the next line (from file)
             fileImport.Close();
         }
+    }
+}
+
+struct State
+{
+    public string name;
+    public bool won;
+    public bool fightFinished;
+    public int numDelegates;
+    public int[] policyLeanings;
+
+    public State(string stateName, System.Random r)
+    {
+        name = stateName;
+        won = false;
+        fightFinished = false;
+        numDelegates = r.Next(20, 30); //randomly initialize numDelegates and policyLeanings
+        policyLeanings = new int[] { r.Next(0, 100), r.Next(0, 100), r.Next(0, 100), r.Next(0, 100) };
     }
 }

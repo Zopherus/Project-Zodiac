@@ -18,8 +18,10 @@ public class PolicyScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        //update color
+        if (value == medianValue) { text.color = Color.green; }
+        else { text.color = Color.red; }
+    }
 
     public void IncreaseValue()
     {
