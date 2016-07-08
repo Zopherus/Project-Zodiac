@@ -1,0 +1,262 @@
+fileFormatVersion: 2
+guid: d7b319ed8aafe7a4ca808d05d89dfddb
+timeCreated: 1467683220
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 00.-bern-punch_0
+    21300002: 00.-bern-punch_1
+    21300004: 00.-bern-punch_2
+    21300006: 00.-bern-punch_3
+    21300008: 00.-bern-punch_4
+    21300010: 00.-bern-punch_5
+    21300012: 00.-bern-punch_6
+    21300014: 00.-bern-punch_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: 00.-bern-punch_0
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 1796
+        width: 416
+        height: 717
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 75.12222, y: 3.5778198}
+        - {x: 63.122223, y: 7.57782}
+        - {x: 53.122223, y: -2.4221802}
+        - {x: 61.122223, y: 23.57782}
+        - {x: 70.12222, y: 122.57782}
+        - {x: 31.122223, y: 128.57782}
+        - {x: -66.87778, y: 128.57782}
+        - {x: -73.87778, y: 105.57782}
+        - {x: -73.87778, y: -58.42218}
+        - {x: -51.877777, y: -121.42218}
+        - {x: -46.877777, y: -127.42218}
+        - {x: 62.122223, y: -127.42218}
+        - {x: 69.12222, y: -120.42218}
+        - {x: 66.12222, y: -114.42218}
+        - {x: 75.12222, y: -72.42218}
+    - name: 00.-bern-punch_1
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 1799
+        width: 411
+        height: 717
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 59.966675, y: 4.64447}
+        - {x: 53.966675, y: -0.3555298}
+        - {x: 52.966675, y: -11.35553}
+        - {x: 51.966675, y: 10.64447}
+        - {x: 62.966675, y: 24.64447}
+        - {x: 61.966675, y: 35.64447}
+        - {x: 71.966675, y: 113.64447}
+        - {x: 30.966675, y: 128.64447}
+        - {x: -63.033325, y: 128.64447}
+        - {x: -73.033325, y: 118.64447}
+        - {x: -73.033325, y: -72.35553}
+        - {x: -46.033325, y: -127.35553}
+        - {x: 67.966675, y: -127.35553}
+        - {x: 73.966675, y: -123.35553}
+        - {x: 73.966675, y: 4.64447}
+        - {x: 71.966675, y: 13.64447}
+    - name: 00.-bern-punch_2
+      rect:
+        serializedVersion: 2
+        x: 3416
+        y: 1818
+        width: 472
+        height: 717
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 71.07776, y: -91.599976}
+        - {x: 85.07776, y: -67.599976}
+        - {x: 85.07776, y: 5.4000244}
+        - {x: 64.07776, y: 115.400024}
+        - {x: 34.07776, y: 128.40002}
+        - {x: -68.92224, y: 128.40002}
+        - {x: -83.92224, y: 123.400024}
+        - {x: -83.92224, y: -22.599976}
+        - {x: -65.92224, y: -127.599976}
+        - {x: 43.07776, y: -127.599976}
+        - {x: 57.07776, y: -118.599976}
+        - {x: 55.07776, y: -114.599976}
+        - {x: 53.07776, y: -112.599976}
+    - name: 00.-bern-punch_3
+      rect:
+        serializedVersion: 2
+        x: 4763
+        y: 1793
+        width: 562
+        height: 717
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 22.011108, y: -70.48889}
+        - {x: 23.011108, y: -69.48889}
+        - {x: 22.011108, y: -76.48889}
+        - {x: 22.011108, y: -81.48889}
+        - {x: 25.011108, y: -84.48889}
+        - {x: 88.01111, y: -85.48889}
+        - {x: 101.01111, y: -44.48889}
+        - {x: 101.01111, y: -0.4888916}
+        - {x: 55.01111, y: 128.51111}
+        - {x: -99.98889, y: 128.51111}
+        - {x: -99.98889, y: -25.488892}
+        - {x: -87.98889, y: -75.48889}
+        - {x: -67.98889, y: -127.48889}
+        - {x: 30.011108, y: -127.48889}
+        - {x: 41.01111, y: -119.48889}
+        - {x: 38.01111, y: -110.48889}
+        - {x: 22.011108, y: -85.48889}
+    - name: 00.-bern-punch_4
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 375
+        width: 562
+        height: 718
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 100.01111, y: 128.33334}
+        - {x: -26.988892, y: 128.33334}
+        - {x: -58.98889, y: 123.33334}
+        - {x: -99.98889, y: 31.333344}
+        - {x: -99.98889, y: -64.66666}
+        - {x: -84.98889, y: -81.66666}
+        - {x: -26.988892, y: -84.66666}
+        - {x: -22.988892, y: -81.66666}
+        - {x: -20.988892, y: -79.66666}
+        - {x: -20.988892, y: -77.66666}
+        - {x: -23.988892, y: -71.66666}
+        - {x: -20.988892, y: -71.66666}
+        - {x: -20.988892, y: -84.66666}
+        - {x: -21.988892, y: -85.66666}
+        - {x: -42.98889, y: -119.66666}
+        - {x: -39.98889, y: -127.66666}
+        - {x: 75.01111, y: -127.66666}
+        - {x: 93.01111, y: -54.666656}
+        - {x: 101.01111, y: -9.6666565}
+        - {x: 101.01111, y: 127.33334}
+    - name: 00.-bern-punch_5
+      rect:
+        serializedVersion: 2
+        x: 1880
+        y: 404
+        width: 473
+        height: 717
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 72.94446, y: 128.64445}
+        - {x: -2.055542, y: 128.64445}
+        - {x: -57.055542, y: 118.644455}
+        - {x: -84.05554, y: -22.355545}
+        - {x: -84.05554, y: -65.355545}
+        - {x: -69.05554, y: -94.355545}
+        - {x: -70.05554, y: -127.355545}
+        - {x: 55.944458, y: -127.355545}
+        - {x: 84.94446, y: -46.355545}
+        - {x: 84.94446, y: 103.644455}
+    - name: 00.-bern-punch_6
+      rect:
+        serializedVersion: 2
+        x: 3399
+        y: 381
+        width: 413
+        height: 717
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18.466675, y: 128.46667}
+        - {x: -65.466675, y: 117.466675}
+        - {x: -73.466675, y: 80.466675}
+        - {x: -73.466675, y: -86.533325}
+        - {x: -64.466675, y: -126.533325}
+        - {x: -63.466675, y: -127.533325}
+        - {x: 51.533325, y: -127.533325}
+        - {x: 74.533325, y: -11.533325}
+        - {x: 74.533325, y: 117.466675}
+        - {x: 29.533325, y: 128.46667}
+    - name: 00.-bern-punch_7
+      rect:
+        serializedVersion: 2
+        x: 4845
+        y: 378
+        width: 416
+        height: 717
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -40.833252, y: 128.40001}
+        - {x: -73.83325, y: 106.40001}
+        - {x: -73.83325, y: -125.59999}
+        - {x: -63.833252, y: -127.59999}
+        - {x: 54.166748, y: -127.59999}
+        - {x: 75.16675, y: -78.59999}
+        - {x: 75.16675, y: 113.40001}
+        - {x: 45.166748, y: 128.40001}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

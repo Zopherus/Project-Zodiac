@@ -1,0 +1,276 @@
+fileFormatVersion: 2
+guid: 8243e8272d4a2ce4985f3436bd6f014f
+timeCreated: 1467794371
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 00.-zodiac-punch_0
+    21300002: 00.-zodiac-punch_1
+    21300004: 00.-zodiac-punch_2
+    21300006: 00.-zodiac-punch_3
+    21300008: 00.-zodiac-punch_4
+    21300010: 00.-zodiac-punch_5
+    21300012: 00.-zodiac-punch_6
+    21300014: 00.-zodiac-punch_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: 00.-zodiac-punch_0
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 1942
+        width: 417
+        height: 695
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 74.83334, y: 10.488892}
+        - {x: 69.83334, y: 12.488892}
+        - {x: 56.833344, y: 9.488892}
+        - {x: 54.833344, y: 5.4888916}
+        - {x: 53.833344, y: -4.5111084}
+        - {x: 50.833344, y: -11.511108}
+        - {x: 51.833344, y: 4.4888916}
+        - {x: 64.83334, y: 22.488892}
+        - {x: 63.833344, y: 118.48889}
+        - {x: 52.833344, y: 124.48889}
+        - {x: -54.166656, y: 124.48889}
+        - {x: -74.16666, y: 110.48889}
+        - {x: -74.16666, y: -66.51111}
+        - {x: -60.166656, y: -122.51111}
+        - {x: -55.166656, y: -123.51111}
+        - {x: 62.833344, y: -123.51111}
+        - {x: 71.83334, y: -116.51111}
+        - {x: 74.83334, y: -87.51111}
+    - name: 00.-zodiac-punch_1
+      rect:
+        serializedVersion: 2
+        x: 1953
+        y: 1942
+        width: 419
+        height: 695
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 48.400024, y: -123.51111}
+        - {x: 62.400024, y: -116.51111}
+        - {x: 63.400024, y: -111.51111}
+        - {x: 60.400024, y: -108.51111}
+        - {x: 75.400024, y: -58.51111}
+        - {x: 75.400024, y: 9.488892}
+        - {x: 60.400024, y: 14.488892}
+        - {x: 53.400024, y: 5.4888916}
+        - {x: 58.400024, y: 26.488892}
+        - {x: 64.400024, y: 120.48889}
+        - {x: 48.400024, y: 124.48889}
+        - {x: -37.599976, y: 124.48889}
+        - {x: -74.599976, y: 102.48889}
+        - {x: -74.599976, y: 28.488892}
+        - {x: -48.599976, y: -117.51111}
+        - {x: -35.599976, y: -123.51111}
+        - {x: -8.599976, y: -123.51111}
+        - {x: -0.5999756, y: -118.51111}
+        - {x: -0.5999756, y: -114.51111}
+        - {x: 20.400024, y: -123.51111}
+    - name: 00.-zodiac-punch_2
+      rect:
+        serializedVersion: 2
+        x: 3419
+        y: 1956
+        width: 478
+        height: 695
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 86.14453, y: -18.533325}
+        - {x: 75.14453, y: 5.466675}
+        - {x: 46.14453, y: 124.466675}
+        - {x: -79.85547, y: 124.466675}
+        - {x: -84.85547, y: 108.466675}
+        - {x: -84.85547, y: 11.466675}
+        - {x: -59.85547, y: -118.533325}
+        - {x: -50.85547, y: -123.533325}
+        - {x: 58.14453, y: -123.533325}
+        - {x: 61.14453, y: -114.533325}
+        - {x: 86.14453, y: -77.533325}
+    - name: 00.-zodiac-punch_3
+      rect:
+        serializedVersion: 2
+        x: 4800
+        y: 1962
+        width: 568
+        height: 692
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 22.166748, y: -65.89996}
+        - {x: 22.166748, y: -69.89996}
+        - {x: 29.166748, y: -72.89996}
+        - {x: 85.16675, y: -71.89996}
+        - {x: 102.16675, y: -36.899963}
+        - {x: 102.16675, y: -4.8999634}
+        - {x: 88.16675, y: 23.100037}
+        - {x: 21.166748, y: 124.10004}
+        - {x: -80.83325, y: 124.10004}
+        - {x: -100.83325, y: 104.10004}
+        - {x: -100.83325, y: -43.899963}
+        - {x: -81.83325, y: -122.89996}
+        - {x: 27.166748, y: -122.89996}
+        - {x: 39.166748, y: -114.89996}
+        - {x: 35.166748, y: -105.89996}
+        - {x: 21.166748, y: -75.89996}
+    - name: 00.-zodiac-punch_4
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 353
+        width: 571
+        height: 695
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 82.53334, y: 124.511116}
+        - {x: -15.46666, y: 124.511116}
+        - {x: -41.46666, y: 112.511116}
+        - {x: -89.46666, y: 18.511116}
+        - {x: -101.46666, y: -7.488884}
+        - {x: -101.46666, y: -31.488884}
+        - {x: -84.46666, y: -59.488884}
+        - {x: -78.46666, y: -62.488884}
+        - {x: -73.46666, y: -54.488884}
+        - {x: -27.46666, y: -72.488884}
+        - {x: -19.46666, y: -70.488884}
+        - {x: -25.46666, y: -60.488884}
+        - {x: -20.46666, y: -67.488884}
+        - {x: -19.46666, y: -68.488884}
+        - {x: -19.46666, y: -103.488884}
+        - {x: -30.46666, y: -104.488884}
+        - {x: -39.46666, y: -113.488884}
+        - {x: -40.46666, y: -123.488884}
+        - {x: 71.53334, y: -123.488884}
+        - {x: 74.53334, y: -115.488884}
+        - {x: 102.53334, y: 19.511116}
+        - {x: 102.53334, y: 112.511116}
+    - name: 00.-zodiac-punch_5
+      rect:
+        serializedVersion: 2
+        x: 1903
+        y: 347
+        width: 478
+        height: 698
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 64.12225, y: 124.87778}
+        - {x: -45.877747, y: 124.87778}
+        - {x: -47.877747, y: 98.87778}
+        - {x: -84.87775, y: 5.877777}
+        - {x: -84.87775, y: -111.12222}
+        - {x: -78.87775, y: -124.12222}
+        - {x: 56.122253, y: -124.12222}
+        - {x: 83.12225, y: -66.12222}
+        - {x: 86.12225, y: -20.122223}
+        - {x: 86.12225, y: 98.87778}
+        - {x: 70.12225, y: 123.87778}
+    - name: 00.-zodiac-punch_6
+      rect:
+        serializedVersion: 2
+        x: 3427
+        y: 333
+        width: 419
+        height: 695
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 65.48889, y: 124.4}
+        - {x: -54.51111, y: 124.4}
+        - {x: -60.51111, y: 120.4}
+        - {x: -74.51111, y: 46.4}
+        - {x: -74.51111, y: -84.6}
+        - {x: -63.51111, y: -123.6}
+        - {x: 46.48889, y: -123.6}
+        - {x: 62.48889, y: -56.6}
+        - {x: 75.48889, y: 22.400002}
+        - {x: 75.48889, y: 99.4}
+    - name: 00.-zodiac-punch_7
+      rect:
+        serializedVersion: 2
+        x: 4870
+        y: 336
+        width: 419
+        height: 692
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 41.555542, y: 123.96667}
+        - {x: -37.444458, y: 123.96667}
+        - {x: -56.444458, y: 117.96667}
+        - {x: -58.444458, y: 24.966667}
+        - {x: -51.444458, y: 1.9666672}
+        - {x: -52.444458, y: 5.966667}
+        - {x: -60.444458, y: 9.966667}
+        - {x: -69.44446, y: 15.966667}
+        - {x: -74.44446, y: 5.966667}
+        - {x: -74.44446, y: -95.03333}
+        - {x: -66.44446, y: -123.03333}
+        - {x: 45.555542, y: -123.03333}
+        - {x: 75.55554, y: -47.033333}
+        - {x: 75.55554, y: 97.96667}
+        - {x: 65.55554, y: 122.96667}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
