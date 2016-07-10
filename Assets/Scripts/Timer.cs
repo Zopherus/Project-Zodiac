@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class Timer : MonoBehaviour {
     Text clock; //Child timer object
 	// Use this for initialization
 	void Start () {
-        timeLeft = 91.0f;
+        timeLeft = 91f;
         clock = GetComponent<Text>();
 	}
 	
@@ -19,5 +20,10 @@ public class Timer : MonoBehaviour {
 
         timerText = timeLeft.ToString();
         clock.text = timerText;
+
+        if (timeLeft < 1)
+        {
+            SceneManager.LoadScene(1);
+        }
 	}
 }

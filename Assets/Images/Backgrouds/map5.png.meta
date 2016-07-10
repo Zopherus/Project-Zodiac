@@ -1,0 +1,183 @@
+fileFormatVersion: 2
+guid: a062bc4053ecfa1479e9b16681cd989b
+timeCreated: 1468100610
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Blaze5
+    21300002: Blaze6
+    21300004: Blaze7
+    21300006: Blaze8
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 76.8
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Blaze5
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 2398
+        width: 626
+        height: 306
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 67.177795, y: -24.755493}
+        - {x: -12.822205, y: 94.24451}
+        - {x: -179.8222, y: 109.24451}
+        - {x: -222.8222, y: 109.24451}
+        - {x: -222.8222, y: 97.24451}
+        - {x: -105.822205, y: -2.7554932}
+        - {x: -19.822205, y: -64.75549}
+        - {x: 22.177795, y: -90.75549}
+        - {x: 83.177795, y: -108.75549}
+        - {x: 175.1778, y: -108.75549}
+        - {x: 223.1778, y: -86.75549}
+        - {x: 223.1778, y: -65.75549}
+        - {x: 163.1778, y: -68.75549}
+    - name: Blaze6
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 1571
+        width: 536
+        height: 420
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -175.77777, y: 135.65564}
+        - {x: -179.77777, y: 149.65564}
+        - {x: -190.77777, y: 149.65564}
+        - {x: -190.77777, y: 101.65564}
+        - {x: -185.77777, y: 69.65564}
+        - {x: -162.77777, y: 24.65564}
+        - {x: -97.77777, y: -34.34436}
+        - {x: -34.77777, y: -71.34436}
+        - {x: 159.22223, y: -149.34436}
+        - {x: 191.22223, y: -149.34436}
+        - {x: 191.22223, y: -139.34436}
+        - {x: 155.22223, y: -82.34436}
+        - {x: 75.22223, y: 27.65564}
+        - {x: -94.77777, y: 49.65564}
+    - name: Blaze7
+      rect:
+        serializedVersion: 2
+        x: 1003
+        y: 895
+        width: 228
+        height: 290
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -81.255554, y: -68.05554}
+        - {x: -41.255554, y: -103.05554}
+        - {x: 10.744446, y: -103.05554}
+        - {x: 81.744446, y: 36.944458}
+        - {x: 81.744446, y: 93.94446}
+        - {x: 58.744446, y: 103.94446}
+        - {x: 41.744446, y: 103.94446}
+        - {x: -16.255554, y: 58.944458}
+        - {x: -81.255554, y: -31.055542}
+    - name: Blaze8
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 164
+        width: 1039
+        height: 353
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -42.57776, y: -118.37778}
+        - {x: -19.577759, y: -114.37778}
+        - {x: 25.422241, y: -103.37778}
+        - {x: 65.42224, y: -93.37778}
+        - {x: 107.42224, y: -81.37778}
+        - {x: 156.42224, y: -66.37778}
+        - {x: 237.42224, y: -39.377777}
+        - {x: 300.42224, y: -17.377777}
+        - {x: 369.42224, y: 3.622223}
+        - {x: 370.42224, y: 6.622223}
+        - {x: 370.42224, y: 17.622223}
+        - {x: 368.42224, y: 18.622223}
+        - {x: 317.42224, y: 37.622223}
+        - {x: 238.42224, y: 63.622223}
+        - {x: 154.42224, y: 91.62222}
+        - {x: 81.42224, y: 111.62222}
+        - {x: 23.422241, y: 122.62222}
+        - {x: 2.4222412, y: 126.62222}
+        - {x: -15.577759, y: 126.62222}
+        - {x: -88.57776, y: 67.62222}
+        - {x: -139.57776, y: 33.622223}
+        - {x: -188.57776, y: 9.622223}
+        - {x: -250.57776, y: -9.377777}
+        - {x: -281.57776, y: -12.377777}
+        - {x: -316.57776, y: -9.377777}
+        - {x: -332.57776, y: -5.377777}
+        - {x: -361.57776, y: 7.622223}
+        - {x: -369.57776, y: 5.622223}
+        - {x: -369.57776, y: -9.377777}
+        - {x: -368.57776, y: -12.377777}
+        - {x: -352.57776, y: -38.377777}
+        - {x: -337.57776, y: -56.377777}
+        - {x: -321.57776, y: -73.37778}
+        - {x: -302.57776, y: -88.37778}
+        - {x: -287.57776, y: -98.37778}
+        - {x: -250.57776, y: -114.37778}
+        - {x: -222.57776, y: -120.37778}
+        - {x: -192.57776, y: -125.37778}
+        - {x: -105.57776, y: -125.37778}
+        - {x: -77.57776, y: -122.37778}
+        - {x: -72.57776, y: -121.37778}
+        - {x: -61.57776, y: -120.37778}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

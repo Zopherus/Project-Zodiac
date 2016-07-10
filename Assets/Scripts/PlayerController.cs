@@ -3,8 +3,6 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	private GameObject sprite;
-
 	//Movement variables
 	public float speed;
 	public float jump;
@@ -21,11 +19,16 @@ public class PlayerController : MonoBehaviour {
     float reload = 1.5f;
     bool singleFire;
 
-	void Start()
+    GameObject player;
+    GameObject computer;
+
+    void Start()
 	{
 		animator = GetComponent<Animator> ();
 		direction = true;
-	}
+        player = GameObject.Find("Player");
+        computer = GameObject.Find("Computer");
+    }
 
 	void Update () 
 	{
@@ -110,16 +113,26 @@ public class PlayerController : MonoBehaviour {
             transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
         }
 
+        float playerX = player.transform.position.x;
+        float compX = computer.transform.position.x;
 
         //Testing to see if punching works
-        if(Input.GetKeyDown(KeyCode.P) & direction)
+        if (Input.GetKeyDown(KeyCode.P) & direction)
         {
             animator.SetTrigger("punch");
+            if (Mathf.Abs(playerX - compX) < 10 & playerX < compX)
+            {
+                computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
+            }
         }
 
-        if(Input.GetKeyDown(KeyCode.P) & !direction)
+        if (Input.GetKeyDown(KeyCode.P) & !direction)
         {
             animator.SetTrigger("punch");
+            if (Mathf.Abs(playerX - compX) < 10 & playerX > compX)
+            {
+                    computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
+            }
         }
 
         reload = reload - Time.deltaTime;
@@ -128,7 +141,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	//Method to check if character is on the ground
-
 	void OnTriggerEnter2D()
 	{
 		grounded = true;

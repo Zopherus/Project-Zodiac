@@ -4,45 +4,61 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Collections.Generic;
 using System.Collections;
 
+#region MainTycoonScript Class
 public class MainTycoonScript : MonoBehaviour
 {
     //character enum
     public enum Character { Trump, Cruz, Clinton, Sanders };
     public enum eventsButtons { Clear, SponsorSpeech, SuperPAC, TownHall, TelevisionAd, Conference };
     //class instances
-    private CalendarHandler calendar;
-    private EventHandler events;
+    private static CalendarHandler calendar;
+    private static EventHandler events;
     private ScrollingTextHandler scrollingText;
     //variables
-    static public Character currentCharacter = Character.Cruz;
+    static public Character currentCharacter;
     public bool timeIsActive = true; //whether or not time goes by (ex. settings)
     private Text highlightText; //text object for displaying highlightText
     private Text stateText; //text object for displaying state info
-    private State[] states = new State[10];
+    public static State[] states = new State[10];
+    static bool firstTimeAwake = true;
 
     //const variables
-    const float DAY_LENGTH = 10f; //length of 1 day in seconds
+    const float DAY_LENGTH = 0.5f; //length of 1 day in seconds
 
     // Use this for initialization
     void Awake()
     {
-        //initialize variables class instances
-        Text[] components = transform.FindChild("Canvas").FindChild("Calendar").GetComponentsInChildren<Text>(); //get text components
-        calendar = new CalendarHandler(this, DAY_LENGTH, components[0], components[1]);
-        events = new EventHandler(DAY_LENGTH);
-        scrollingText = new ScrollingTextHandler(this);
-        highlightText = GameObject.Find("HighlightText").GetComponent<Text>();
-        stateText = GameObject.Find("StateText").GetComponent<Text>();
-        System.Random r = new System.Random(); //seed rng outside of loop (otherwise, each rng will be seeded with the same or close to the same values -> not random AT ALL)
-        for (int i = 0; i < states.Length; i++)
+        if (firstTimeAwake)
         {
-            states[i] = new State(i.ToString(), r); //iniatialize each state and seed it randomly
+            firstTimeAwake = false;
+            //initialize variables class instances
+            Text[] components = transform.FindChild("Canvas").FindChild("Calendar").GetComponentsInChildren<Text>(); //get text components
+            calendar = new CalendarHandler(this, DAY_LENGTH, components[0], components[1]);
+            events = new EventHandler(DAY_LENGTH);
+            scrollingText = new ScrollingTextHandler(this);
+            highlightText = GameObject.Find("HighlightText").GetComponent<Text>();
+            stateText = GameObject.Find("StateText").GetComponent<Text>();
+            System.Random r = new System.Random(); //seed rng outside of loop (otherwise, each rng will be seeded with the same or close to the same values -> not random AT ALL)
+            for (int i = 0; i < states.Length; i++)
+            {
+                states[i] = new State(i.ToString(), r); //iniatialize each state and seed it randomly
+            }
+            changeState(1); //display first state
         }
-        changeState(1); //display first state
+        else
+        {
+            scrollingText = new ScrollingTextHandler(this);
+            highlightText = GameObject.Find("HighlightText").GetComponent<Text>();
+            stateText = GameObject.Find("StateText").GetComponent<Text>();
+            PopularityManager.currentState++;
+            changeState(PopularityManager.currentState); //display first state
+        }
     }
 
+    //same as awake, but only when level is reloaded
     void OnLevelWasLoaded(int level)
     {
         //if this level was loaded, initialize icon and reactivate time variable
@@ -82,6 +98,9 @@ public class MainTycoonScript : MonoBehaviour
                     sandersIcon.SetActive(false);
                     break;
             }
+
+            //reinitialize all variables
+
         }
     }
 
@@ -92,7 +111,7 @@ public class MainTycoonScript : MonoBehaviour
         if (timeIsActive)
         {
             events.UpdateTimer(this);
-            if(calendar.numDays % 6 == 0 && calendar.numDays > 0)
+            if(calendar.numDays % 13 == 0 && calendar.numDays > 0)
             {
                 timeIsActive = false; //after 6 days, trigger FightingScene (as soon as 7th day begins, this is triggered)
                 SceneManager.LoadScene("Fighting Scene");
@@ -104,7 +123,8 @@ public class MainTycoonScript : MonoBehaviour
 
     public void changeState(int state)
     {
-        stateText.text = states[state - 1].name + "\n";
+        stateText.text = "";
+        if(PopularityManager.currentState == state - 1) { stateText.text += "CURRENT STATE\n"; }
         stateText.text += states[state - 1].numDelegates + " delegates" + "\n";
         for(int i = 0; i < events.POLICY_LEANINGS_NAMES.Length; i++)
         {
@@ -130,7 +150,7 @@ public class MainTycoonScript : MonoBehaviour
     }
 
     //change text when highlightd
-    public void changehHighlightsText(string _event)
+    public void changeHighlightsText(string _event)
     {
         switch(_event)
         {
@@ -227,22 +247,24 @@ public class MainTycoonScript : MonoBehaviour
         return values;
     }
 }
+#endregion
 
+#region PopularityManagerClass
 public class PopularityManager
 {
-    private float popularity; //percent of people i.e. number from 1-100
-    private int currentState; //number of current state
+    public static float popularity; //percent of people i.e. number from 1-100
+    public static int currentState; //number of current state
     //array of policy factors ([state number, policy]): between -1.0 and 1.0
-    private float[,] policyFactors = {{ 0f,  0f,  0f,  0f}, //1 row for each state
-    /* [,0]: foriegn factor        */ { 0f,  0f,  0f,  0f},
-    /* [,1]: economic factor       */ { 0f,  0f,  0f,  0f},
-    /* [,2]: social factor         */ { 0f,  0f,  0f,  0f},
-    /* [,3]: persona factor        */ { 0f,  0f,  0f,  0f},
-                                      { 0f,  0f,  0f,  0f},
-                                      { 0f,  0f,  0f,  0f},
-                                      { 0f,  0f,  0f,  0f},
-                                      { 0f,  0f,  0f,  0f},
-                                      { 0f,  0f,  0f,  0f}};
+    //private float[,] policyFactors = {{ 0f,  0f,  0f,  0f}, //1 row for each state
+    ///* [,0]: foriegn factor        */ { 0f,  0f,  0f,  0f},
+    ///* [,1]: economic factor       */ { 0f,  0f,  0f,  0f},
+    ///* [,2]: social factor         */ { 0f,  0f,  0f,  0f},
+    ///* [,3]: persona factor        */ { 0f,  0f,  0f,  0f},
+    //                                  { 0f,  0f,  0f,  0f},
+    //                                  { 0f,  0f,  0f,  0f},
+    //                                  { 0f,  0f,  0f,  0f},
+    //                                  { 0f,  0f,  0f,  0f},
+    //                                  { 0f,  0f,  0f,  0f}};
 
     public PopularityManager(float initialPopularity)
     {
@@ -259,18 +281,32 @@ public class PopularityManager
         {
             //update the median in each policy script
             policyScripts[i].UpdateMedian();
-
-            //get overall difference (sum of all 4 differences for policy)
-            float tempDif = values[i] - policyFactors[currentState, i];
-            difference += tempDif;
+            difference += Math.Abs(values[i] - MainTycoonScript.states[currentState].policyLeanings[i]);
         }
-        difference /= 4;
-        popularity = 100f - (difference * differenceMultiplier);
 
+        difference /= 4f; //divide by 4 since there are 4 values (max difference is 100)
+        difference *= differenceMultiplier;  //multiplier by multiplier (since some events are less effective)
+        popularity = 100f - difference; //popularity is just max (100) minus difference between policy leanings and player values
+
+        //float difference = 0;
+        //PolicyScript[] policyScripts = script.transform.FindChild("Canvas").FindChild("Policies").GetComponentsInChildren<PolicyScript>();
+        //for (int i = 0; i < values.Length; i++)
+        //{
+        //    //update the median in each policy script
+        //    policyScripts[i].UpdateMedian();
+
+        //    //get overall difference (sum of all 4 differences for policy)
+        //    float tempDif = values[i] - policyFactors[currentState, i];
+        //    difference += tempDif;
+        //}
+        //difference /= 4;
+        //popularity = 100f - (difference * differenceMultiplier);
+
+        //update text
         Text statsText = script.transform.FindChild("Canvas").FindChild("YourStats").GetComponent<Text>();
         string[] newStatText = statsText.text.Split('\n');
         newStatText[1] = String.Format("Popularity: {0:N1}%", popularity);
-
+        
         statsText.text = string.Empty;
         foreach(string line in newStatText)
         {
@@ -322,14 +358,16 @@ public class CalendarHandler
             dayTimer = dayCycle;
         }
         //update mainTimer in scene
-        int totalSecondsLeft = (int)((5 - numDays) * dayCycle + dayTimer);
+        int totalSecondsLeft = (int)((12 - numDays) * dayCycle + dayTimer);
         string minutes = (totalSecondsLeft / 60).ToString("D2");
         string seconds = (totalSecondsLeft % 60).ToString("D2");
         sceneTimerTime.text = "TIME UNTIL NEXT FIGHT: " + minutes + ":" + seconds;
-        sceneTimerDays.text = "DAYS UNTIL NEXT FIGHT: " + (6 - numDays).ToString();
+        sceneTimerDays.text = "DAYS UNTIL NEXT FIGHT: " + (13 - numDays).ToString();
     }
 }
+#endregion
 
+#region EventHandlerClass
 //class for handling political event actions
 public class EventHandler
 {
@@ -513,7 +551,9 @@ public class EventHandler
         }
     }
 }
+#endregion
 
+#region ScrollingTextHandlerClass
 public class ScrollingTextHandler
 {
     private Text scrollingText; //child text object
@@ -546,29 +586,22 @@ public class ScrollingTextHandler
         if (scrollingText.text.Length < IMPORT_CYCLE)
         {
             StreamReader fileImport = new StreamReader(importFilePath); //access file at provided path
-            int length = 0;
-            string nextLine = fileImport.ReadLine();
-            while (nextLine != null) //get length of file
+            List<string> headlines = new List<string>(fileImport.ReadToEnd().Split('\n'));
+            headlines.Shuffle();
+            foreach(string s in headlines)
             {
-                length++;
-                nextLine = fileImport.ReadLine();
-            }
-            fileImport.Close(); //close and reopen the file
+                scrollingText.text += s + " | ";
+            }       
 
-            fileImport = new StreamReader(importFilePath);
-            int randomMax = rand.Next(0, length);
-            for (int i = 0; i < randomMax; i++)//choose random number between 0 and length, skip that many lines
-            {
-                fileImport.ReadLine();
-            }
-            string lineToAppend = fileImport.ReadLine();
-            scrollingText.text = scrollingText.text + "  |  " + lineToAppend; //add the next line (from file)
+
             fileImport.Close();
         }
     }
 }
+#endregion
 
-struct State
+#region State Struct
+public struct State
 {
     public string name;
     public bool won;
@@ -585,3 +618,23 @@ struct State
         policyLeanings = new int[] { r.Next(0, 100), r.Next(0, 100), r.Next(0, 100), r.Next(0, 100) };
     }
 }
+#endregion
+
+#region Shuffle
+static class ShufflerClass
+{
+    public static void Shuffle<T>(this IList<T> list)
+    {
+        System.Random rng = new System.Random();
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+}
+#endregion

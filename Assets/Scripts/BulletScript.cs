@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
@@ -25,8 +25,11 @@ public class BulletScript : MonoBehaviour {
     }
 
     
-    void OnTriggerEnter2D()
+    void OnTriggerEnter2D(Collider2D other)
     {
+        var name = other.transform.parent.name;
+        Player computer = GameObject.Find(name).transform.FindChild("Health Bar").GetComponent<Player>();
+        computer.popularity.CurrentVal -= 5;
         DestroyObject(this.gameObject);
     }
     

@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
+
+    SceneManager sm = new SceneManager();
     
     [SerializeField]
-    private Stats popularity;
+    public Stats popularity;
 
     public void Awake()
     {
@@ -14,15 +17,9 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if(popularity.CurrentVal <= 0)
         {
-            popularity.CurrentVal -= 10;
+            SceneManager.LoadScene(1);
         }
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            popularity.CurrentVal += 10;
-        }
-
     }
 }
