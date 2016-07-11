@@ -26,7 +26,7 @@ public class MainTycoonScript : MonoBehaviour
     static bool firstTimeAwake = true;
 
     //const variables
-    const float DAY_LENGTH = 0.5f; //length of 1 day in seconds
+    const float DAY_LENGTH = 1.0f; //length of 1 day in seconds
 
     // Use this for initialization
     void Awake()
@@ -50,11 +50,17 @@ public class MainTycoonScript : MonoBehaviour
         }
         else
         {
+            calendar.sceneTimerTime = GameObject.Find("TimeUntil").gameObject.GetComponent<Text>();
+            calendar.sceneTimerDays = GameObject.Find("DaysUntil").gameObject.GetComponent<Text>();
+            Text[] components = transform.FindChild("Canvas").FindChild("Calendar").GetComponentsInChildren<Text>(); //get text components
+            calendar.calendarDayText = components[0];
+            calendar.calendarDayText = components[1];
             scrollingText = new ScrollingTextHandler(this);
             highlightText = GameObject.Find("HighlightText").GetComponent<Text>();
             stateText = GameObject.Find("StateText").GetComponent<Text>();
             PopularityManager.currentState++;
             changeState(PopularityManager.currentState); //display first state
+            calendar.numDays++;
         }
     }
 
@@ -320,18 +326,20 @@ public class PopularityManager
         currentState++;
     }
 }
+#endregion
 
+#region CalendarHandler Class
 //class for handling calendar/date actions
 public class CalendarHandler
 {
     public int numDays; //public access var for number of days
     private DateTime calendar; //calender (for day and month references)
     private float dayTimer; //time until next day
-    private Text calendarDayText; //child text object for days
-    private Text calendarMonthText; //child text object for months
+    public Text calendarDayText; //child text object for days
+    public Text calendarMonthText; //child text object for months
     public float dayCycle; //seconds per day
-    private Text sceneTimerTime; //timer text in scene (for displaying time until next fight)
-    private Text sceneTimerDays; //timer text in scene (for displaying days until next fight)
+    public Text sceneTimerTime; //timer text in scene (for displaying time until next fight)
+    public Text sceneTimerDays; //timer text in scene (for displaying days until next fight)
 
     public CalendarHandler(MainTycoonScript script, float dayLength, Text dayText, Text monthText)
     {
@@ -358,11 +366,11 @@ public class CalendarHandler
             dayTimer = dayCycle;
         }
         //update mainTimer in scene
-        int totalSecondsLeft = (int)((12 - numDays) * dayCycle + dayTimer);
+        int totalSecondsLeft = (int)((12 - (numDays % 13)) * dayCycle + dayTimer); //%13 is to account for after fights - 13 day cycle
         string minutes = (totalSecondsLeft / 60).ToString("D2");
         string seconds = (totalSecondsLeft % 60).ToString("D2");
         sceneTimerTime.text = "TIME UNTIL NEXT FIGHT: " + minutes + ":" + seconds;
-        sceneTimerDays.text = "DAYS UNTIL NEXT FIGHT: " + (13 - numDays).ToString();
+        sceneTimerDays.text = "DAYS UNTIL NEXT FIGHT: " + (13 - numDays & 13).ToString(); //%13 is to account for after fights - 13 day cycle
     }
 }
 #endregion

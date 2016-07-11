@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\MusicScript.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\PlayerSelectScript.cs" />
     <Compile Include="Assets\Scripts\PolicyScript.cs" />
     <Compile Include="Assets\Scripts\RayCastButtonScript.cs" />
     <Compile Include="Assets\Scripts\Stats.cs" />
