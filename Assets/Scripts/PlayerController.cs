@@ -19,8 +19,10 @@ public class PlayerController : MonoBehaviour {
     float reload = 1.5f;
     bool singleFire;
 
+    //For quick access to the Player and Computer objects
     GameObject player;
     GameObject computer;
+    string activeChar = PlayerSelectScript.character;
 
     void Start()
 	{
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () 
 	{
+
+        //Up and down movement
 		if (Input.GetKeyDown (KeyCode.Space) || Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown (KeyCode.W)) 
 		{
 			if(grounded & direction)
@@ -52,7 +56,6 @@ public class PlayerController : MonoBehaviour {
 		moveVelocity = 0;
 
 		//Left and right movement
-
 		if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 		{
 			moveVelocity = -speed;
@@ -91,14 +94,13 @@ public class PlayerController : MonoBehaviour {
 			animator.SetBool ("moving", moving);
 		}
 
-
-        //Testing to see if shooting works
+        //Shooting
         if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & direction)
         {
             animator.SetTrigger("shoot");
-            GameObject bacon = Instantiate<GameObject>(transform.FindChild("Projectile").gameObject);
-            bacon.SetActive(true);
-            bacon.transform.position = transform.FindChild("spawnPoint").position;
+            GameObject projectile = Instantiate<GameObject>(transform.FindChild("Projectile").gameObject);
+            projectile.SetActive(true);
+            projectile.transform.position = transform.FindChild("spawnPoint").position;
             reload = .5f;
         }
 
@@ -113,10 +115,10 @@ public class PlayerController : MonoBehaviour {
             transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
         }
 
-        float playerX = player.transform.position.x;
+        float playerX = player.transform.FindChild(activeChar).transform.position.x;
         float compX = computer.transform.position.x;
 
-        //Testing to see if punching works
+        //Punching
         if (Input.GetKeyDown(KeyCode.P) & direction)
         {
             animator.SetTrigger("punch");
@@ -131,7 +133,7 @@ public class PlayerController : MonoBehaviour {
             animator.SetTrigger("punch");
             if (Mathf.Abs(playerX - compX) < 10 & playerX > compX)
             {
-                    computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
+                computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
             }
         }
 

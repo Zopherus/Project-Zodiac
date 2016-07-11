@@ -49,7 +49,7 @@ public class AIControl : MonoBehaviour {
                 playerCharacter = player.transform.FindChild("Bernie").gameObject;
                 break;
             case MainTycoonScript.Character.Cruz:
-                playerCharacter = player.transform.FindChild("Cruz").gameObject;
+                playerCharacter = player.transform.FindChild("Zodiac").gameObject;
                 break;
             case MainTycoonScript.Character.Trump:
                 playerCharacter = player.transform.FindChild("Trump").gameObject;
