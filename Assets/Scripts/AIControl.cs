@@ -1,38 +1,93 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class AIControl : MonoBehaviour {
+    public enum AIState { WalkForward, WalkBack, Punch, Shoot, Jump, None };
+    private List<AIState> currentState = new List<AIState>(new AIState[] { AIState.None });
 
     //Movement variables
     public float speed;
     public float jump;
     float moveVelocity;
 
+    const float PUNCH_DISTANCE = 5;
+
     //Boolean to see if on the ground
     bool grounded = true;
     Animator animator;
-    bool direction;
+    bool direction; //positive is right
     bool moving;
 
     //Variables related to the shooting
     float timer = 3.0f;
-    float reload = 1.5f;
     bool singleFire;
+
+    float punchTimer = 0.5f;
+    const float PUNCH_WAIT = 0.5f;
+
+    float stateTimer = 1.3f;
+    const float STATE_CHANGE_WAIT = 1.3f;
 
     GameObject player;
     GameObject computer;
+    GameObject playerCharacter;
 
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
-        direction = true;
+        direction = false;
         player = GameObject.Find("Player");
         computer = GameObject.Find("Computer");
+        switch(MainTycoonScript.currentCharacter)
+        {
+            case MainTycoonScript.Character.Clinton:
+                playerCharacter = player.transform.FindChild("Clinton").gameObject;
+                break;
+            case MainTycoonScript.Character.Sanders:
+                playerCharacter = player.transform.FindChild("Bernie").gameObject;
+                break;
+            case MainTycoonScript.Character.Cruz:
+                playerCharacter = player.transform.FindChild("Cruz").gameObject;
+                break;
+            case MainTycoonScript.Character.Trump:
+                playerCharacter = player.transform.FindChild("Trump").gameObject;
+                break;
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        #region Update CurrentState
+        currentState.Clear();
+        float distanceFromPlayer = Math.Abs(playerCharacter.transform.position.x - transform.position.x);
+        Debug.Log(distanceFromPlayer);
+
+        if(playerCharacter.transform.position.x < transform.position.x & direction) { direction = false; }
+        if(playerCharacter.transform.position.x > transform.position.x & !direction) { direction = true; }
+        animator.SetBool("direction", direction);
+        stateTimer -= Time.deltaTime; //update stateTimer
+        if (distanceFromPlayer > 15) //keep player relatively close to player
+        {
+            currentState.Add(AIState.WalkForward);
+        }
+        if (stateTimer <= 0)
+        {
+            if (distanceFromPlayer <= PUNCH_DISTANCE) //punch the player
+            {
+                currentState.Add(AIState.Punch);
+            }
+            else
+            {
+                currentState.Add(AIState.Shoot);
+            }
+            stateTimer = STATE_CHANGE_WAIT;
+        }
+        #endregion
+
+        #region Execute CurrentState actions
+        if (currentState.Contains(AIState.Jump))
         {
             if (grounded & direction)
             {
@@ -53,7 +108,8 @@ public class AIControl : MonoBehaviour {
 
         //Left and right movement
 
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        //left
+        if ((currentState.Contains(AIState.WalkBack) & direction) || (currentState.Contains(AIState.WalkForward) & !direction))
         {
             moveVelocity = -speed;
 
@@ -66,13 +122,8 @@ public class AIControl : MonoBehaviour {
             animator.SetBool("moving", moving);
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
-        {
-            moving = false;
-            animator.SetBool("moving", moving);
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        //right
+        if ((currentState.Contains(AIState.WalkBack) & !direction) || (currentState.Contains(AIState.WalkForward) & direction))
         {
             moveVelocity = speed;
 
@@ -85,7 +136,7 @@ public class AIControl : MonoBehaviour {
             animator.SetBool("moving", moving);
         }
 
-        if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
+        else
         {
             moving = false;
             animator.SetBool("moving", moving);
@@ -93,51 +144,52 @@ public class AIControl : MonoBehaviour {
 
 
         //Testing to see if shooting works
-        if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & direction)
+        if (currentState.Contains(AIState.Shoot) & grounded & direction)
         {
             animator.SetTrigger("shoot");
             GameObject bacon = Instantiate<GameObject>(transform.FindChild("Projectile").gameObject);
             bacon.SetActive(true);
             bacon.transform.position = transform.FindChild("spawnPoint").position;
-            reload = .5f;
         }
 
-        if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & !direction)
+        if (currentState.Contains(AIState.Shoot) & grounded & !direction)
         {
             transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
             animator.SetTrigger("shoot");
             GameObject projectile = Instantiate<GameObject>(transform.FindChild("Projectile").gameObject);
             projectile.SetActive(true);
             projectile.transform.position = transform.FindChild("spawnPoint left").position;
-            reload = .5f;
             transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
         }
 
-        float playerX = player.transform.position.x;
-        float compX = computer.transform.position.x;
+        float playerX = playerCharacter.transform.position.x;
+        float compX = transform.position.x;
 
         //Testing to see if punching works
-        if (Input.GetKeyDown(KeyCode.P) & direction)
+        if (currentState.Contains(AIState.Punch) & direction)
         {
             animator.SetTrigger("punch");
-            if (Mathf.Abs(playerX - compX) < 10 & compX < playerX)
+            if (Mathf.Abs(playerX - compX) < PUNCH_DISTANCE & compX < playerX & punchTimer <= 0f)
             {
                 player.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
+                punchTimer = PUNCH_WAIT;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.P) & !direction)
+        if (currentState.Contains(AIState.Punch) & !direction)
         {
             animator.SetTrigger("punch");
-            if (Mathf.Abs(playerX - compX) < 10 & compX > playerX)
+            if (Mathf.Abs(playerX - compX) < PUNCH_DISTANCE & compX > playerX & punchTimer <= 0f)
             {
                 player.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
+                punchTimer = PUNCH_WAIT;
             }
         }
-
-        reload = reload - Time.deltaTime;
+        
+        punchTimer -= Time.deltaTime;
 
         GetComponent<Rigidbody2D>().velocity = new Vector2(moveVelocity, GetComponent<Rigidbody2D>().velocity.y);
+        #endregion
     }
 
     //Method to check if character is on the ground
