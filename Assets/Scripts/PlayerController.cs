@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour {
             projectile.SetActive(true);
             projectile.transform.position = transform.FindChild("spawnPoint").position;
             reload = .5f;
+            transform.FindChild("shootSound").GetComponent<AudioSource>().Play();
         }
 
         if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & !direction)
@@ -113,6 +114,7 @@ public class PlayerController : MonoBehaviour {
             projectile.transform.position = transform.FindChild("spawnPoint left").position;
             reload = .5f;
             transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
+            transform.FindChild("shootSound").GetComponent<AudioSource>().Play();
         }
 
         //Floats that determine the position of each character. Important to determining if a punch connects

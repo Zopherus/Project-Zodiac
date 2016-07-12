@@ -8,13 +8,24 @@ public class PolicyScript : MonoBehaviour {
     private float medianValue;
     public float value;
     private Text text;
+    public int id; //set through Unity editor
 
-	// Use this for initialization
-	void Start () {
-        medianValue = 50f;
-        value = 50f;
+    // Use this for initialization
+    void Start()
+    {
+        if (MainTycoonScript.firstTimeAwake)
+        {
+            medianValue = 50f;
+            value = 50f;
+        }
+        else
+        {
+            medianValue = MainTycoonScript.policyValues[id];
+            value = medianValue;
+        }
         text = transform.FindChild("Value").GetComponent<Text>();
-	}
+        UpdateValueText(value);
+    }
 
 	// Update is called once per frame
 	void Update () {

@@ -12,4 +12,14 @@ public class MusicScript : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnLevelWasLoaded(int level)
+    {
+        //if this level was loaded, destroy itself (prevent double music when returning to title screen)
+        if (level == 0)
+        {
+            Instantiate(this.gameObject); //don't worry, it makes sense. Simon knows...
+            Destroy(this.gameObject);
+        }
+    }
 }

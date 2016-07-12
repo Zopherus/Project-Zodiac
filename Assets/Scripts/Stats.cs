@@ -42,10 +42,18 @@ public class Stats {
         }
     }
 
-    public void Initialize()
+    public void Initialize(string parentName)
     {
         this.MaxVal = maxVal;
-        this.CurrentVal = currentVal;
+        float scaledPopularity = PopularityManager.popularity / 2f;
+        if (parentName == "Computer")
+        {
+            this.CurrentVal = (50f - scaledPopularity) + 50f; //computer's health bar (inverse of player's)
+        }
+        else
+        {
+            this.CurrentVal = scaledPopularity + 50f; //player's health bar
+        }
     }
 
     // Use this for initialization

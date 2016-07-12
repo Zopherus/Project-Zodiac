@@ -15,7 +15,7 @@ public class MainTycoonScript : MonoBehaviour
     public enum eventsButtons { Clear, SponsorSpeech, SuperPAC, TownHall, TelevisionAd, Conference };
     //class instances
     private static CalendarHandler calendar;
-    private static EventHandler events;
+    public static EventHandler events;
     private ScrollingTextHandler scrollingText;
     //variables
     static public Character currentCharacter;
@@ -23,17 +23,18 @@ public class MainTycoonScript : MonoBehaviour
     private Text highlightText; //text object for displaying highlightText
     private Text stateText; //text object for displaying state info
     public static State[] states = new State[10];
-    static bool firstTimeAwake = true;
+    public static bool firstTimeAwake = true;
+    public static float[] policyValues = new float[4];
 
     //const variables
-    const float DAY_LENGTH = 1.0f; //length of 1 day in seconds
+    public const float DAY_LENGTH = 10f; //length of 1 day in seconds
+    public const int DAYS_PER_CYCLE = 14; //number of days in each cycle
 
     // Use this for initialization
     void Awake()
     {
         if (firstTimeAwake)
         {
-            firstTimeAwake = false;
             //initialize variables class instances
             Text[] components = transform.FindChild("Canvas").FindChild("Calendar").GetComponentsInChildren<Text>(); //get text components
             calendar = new CalendarHandler(this, DAY_LENGTH, components[0], components[1]);
@@ -50,17 +51,40 @@ public class MainTycoonScript : MonoBehaviour
         }
         else
         {
+            GetComponent<AudioSource>().Stop();
+            PopularityManager.currentState++;
+            if (PopularityManager.currentState >= 10) //end of game
+            {
+                timeIsActive = false;
+                int totalPossibleDelegates = 0;
+                for (int i = 0; i < states.Length; i++)
+                {
+                    totalPossibleDelegates += states[i].numDelegates;
+                }
+                if((float)events.delegates / (float)totalPossibleDelegates > 0.5f)
+                {
+                    //win
+                    GameObject.Find("Won").SetActive(true);
+                }
+                else
+                {
+                    //lose
+                    GameObject.Find("Lost").SetActive(false);
+                }
+            }
             calendar.sceneTimerTime = GameObject.Find("TimeUntil").gameObject.GetComponent<Text>();
             calendar.sceneTimerDays = GameObject.Find("DaysUntil").gameObject.GetComponent<Text>();
-            Text[] components = transform.FindChild("Canvas").FindChild("Calendar").GetComponentsInChildren<Text>(); //get text components
-            calendar.calendarDayText = components[0];
-            calendar.calendarDayText = components[1];
+            calendar.calendarDayText = GameObject.Find("DayText").GetComponent<Text>();
+            calendar.calendarMonthText = GameObject.Find("MonthText").GetComponent<Text>();
             scrollingText = new ScrollingTextHandler(this);
             highlightText = GameObject.Find("HighlightText").GetComponent<Text>();
             stateText = GameObject.Find("StateText").GetComponent<Text>();
-            PopularityManager.currentState++;
             changeState(PopularityManager.currentState); //display first state
-            calendar.numDays++;
+            calendar.numDays = 0;
+            events.UpdateMoney(this); //update money
+            events.popularity.UpdatePopularity(this, GetPolicyValues(), 1f);
+            //UpdatePolicyValues();
+            GameObject.Find("BackgroundMusic").GetComponent<AudioSource>().Play();
         }
     }
 
@@ -117,9 +141,11 @@ public class MainTycoonScript : MonoBehaviour
         if (timeIsActive)
         {
             events.UpdateTimer(this);
-            if(calendar.numDays % 13 == 0 && calendar.numDays > 0)
+            if(calendar.numDays % DAYS_PER_CYCLE == 0 && calendar.numDays > 0)
             {
-                timeIsActive = false; //after 6 days, trigger FightingScene (as soon as 7th day begins, this is triggered)
+                firstTimeAwake = false;
+                policyValues = GetPolicyValues(); //update static policy values array
+                timeIsActive = false;
                 SceneManager.LoadScene("Fighting Scene");
             }
             calendar.UpdateCalendar();
@@ -147,11 +173,12 @@ public class MainTycoonScript : MonoBehaviour
             {
                 stateText.text += "moderate\n";
             }
-            if(states[state - 1].fightFinished)
-            {
-                if(states[state - 1].won) { stateText.text += "You have WON this state"; } // player has won this state
-                else { stateText.text += "You have LOST this state"; } //player has lost this state
-            }
+            
+        }
+        if (states[state - 1].fightFinished)
+        {
+            if (states[state - 1].won) { stateText.text += "You have WON this state\n"; } // player has won this state
+            else { stateText.text += "You have LOST this state\n"; } //player has lost this state
         }
     }
 
@@ -252,6 +279,17 @@ public class MainTycoonScript : MonoBehaviour
         }
         return values;
     }
+
+    //update policy values in child sliders
+    public void UpdatePolicyValues()
+    {
+        PolicyScript[] policyScripts = transform.FindChild("Canvas").FindChild("Policies").GetComponentsInChildren<PolicyScript>();
+        for (int i = 0; i < policyScripts.Length; i++)
+        {
+            policyScripts[i].value = policyValues[i];
+            policyScripts[i].UpdateMedian();
+        }
+    }
 }
 #endregion
 
@@ -337,15 +375,17 @@ public class CalendarHandler
     private float dayTimer; //time until next day
     public Text calendarDayText; //child text object for days
     public Text calendarMonthText; //child text object for months
-    public float dayCycle; //seconds per day
+    public float SECONDS_PER_DAY; //seconds per day
+    public float DAYS_IN_CYCLE; //days in a cycle
     public Text sceneTimerTime; //timer text in scene (for displaying time until next fight)
     public Text sceneTimerDays; //timer text in scene (for displaying days until next fight)
 
     public CalendarHandler(MainTycoonScript script, float dayLength, Text dayText, Text monthText)
     {
         calendar = new DateTime(2016, 4, 20);
-        dayCycle = dayLength;
-        dayTimer = dayCycle;
+        SECONDS_PER_DAY = dayLength;
+        dayTimer = SECONDS_PER_DAY;
+        DAYS_IN_CYCLE = MainTycoonScript.DAYS_PER_CYCLE;
 
         calendarDayText = dayText;
         calendarMonthText = monthText;
@@ -363,14 +403,14 @@ public class CalendarHandler
             calendar = calendar.AddDays(1.0);
             calendarDayText.text = calendar.Day.ToString(); //update calendar graphic
             calendarMonthText.text = new DateTimeFormatInfo().GetAbbreviatedMonthName(calendar.Month);
-            dayTimer = dayCycle;
+            dayTimer = SECONDS_PER_DAY;
         }
         //update mainTimer in scene
-        int totalSecondsLeft = (int)((12 - (numDays % 13)) * dayCycle + dayTimer); //%13 is to account for after fights - 13 day cycle
+        int totalSecondsLeft = (int)((14 - (numDays % DAYS_IN_CYCLE)) * SECONDS_PER_DAY + dayTimer);
         string minutes = (totalSecondsLeft / 60).ToString("D2");
         string seconds = (totalSecondsLeft % 60).ToString("D2");
         sceneTimerTime.text = "TIME UNTIL NEXT FIGHT: " + minutes + ":" + seconds;
-        sceneTimerDays.text = "DAYS UNTIL NEXT FIGHT: " + (13 - numDays & 13).ToString(); //%13 is to account for after fights - 13 day cycle
+        sceneTimerDays.text = "DAYS UNTIL NEXT FIGHT: " + (DAYS_IN_CYCLE - (numDays % DAYS_IN_CYCLE)).ToString();
     }
 }
 #endregion
@@ -380,11 +420,11 @@ public class CalendarHandler
 public class EventHandler
 {
     private int money; //amount of money player has
-    private int delegates; //number of delegates player has
+    public int delegates; //number of delegates player has
     private string busy; //wether the player is busy doing an event or not (if busy, string is event they are doing, otherwise busy = "")
     private float timer; //stores time until no longer busy
     private float DAY_LENGTH; //length of day (get from main script)
-    private PopularityManager popularity;
+    public PopularityManager popularity;
 
     public readonly string[] POLICY_LEANINGS_NAMES = { "Foreign Policy", "Social Policy", "Economic Policy", "Charisma" };
 
@@ -519,24 +559,24 @@ public class EventHandler
     private void UpdateStatusBar(float timeRemainingEvent, MainTycoonScript script)
     {
         //get status bar and change x scale based on time elapsed
-        Vector3 scale = new Vector3(1, 1, 1);
+        Vector3 scale = new Vector3(1, 0.3f, 1);
         //x scale will be time left divided by total time
         switch (busy)
         {
             case "sponsor speech":
-                scale = new Vector3(timeRemainingEvent / TIME_SPONSOR_SPEECH, 1, 1);
+                scale = new Vector3(timeRemainingEvent / TIME_SPONSOR_SPEECH, 0.3f, 1);
                 break;
             case "super pac":
-                scale = new Vector3(timeRemainingEvent / TIME_SUPER_PAC, 1, 1);
+                scale = new Vector3(timeRemainingEvent / TIME_SUPER_PAC, 0.3f, 1);
                 break;
             case "town hall":
-                scale = new Vector3(timeRemainingEvent / TIME_TOWN_HALL, 1, 1);
+                scale = new Vector3(timeRemainingEvent / TIME_TOWN_HALL, 0.3f, 1);
                 break;
             case "television ad":
-                scale = new Vector3(timeRemainingEvent / TIME_TELEVISION_AD, 1, 1);
+                scale = new Vector3(timeRemainingEvent / TIME_TELEVISION_AD, 0.3f, 1);
                 break;
             case "conference":
-                scale = new Vector3(timeRemainingEvent / TIME_CONFERENCE, 1, 1);
+                scale = new Vector3(timeRemainingEvent / TIME_CONFERENCE, 0.3f, 1);
                 break;
         }
         var statusBar = script.transform.FindChild("StatusBar"); //get status bar and apply changes
@@ -544,7 +584,7 @@ public class EventHandler
     }
 
     //update amount of money displayed
-    private void UpdateMoney(MainTycoonScript script)
+    public void UpdateMoney(MainTycoonScript script)
     {
         //get text from child
         Text yourStats = script.transform.FindChild("Canvas").FindChild("YourStats").GetComponent<Text>();
@@ -577,6 +617,17 @@ public class ScrollingTextHandler
         scrollingText = script.transform.FindChild("Canvas").FindChild("ScrollingText").GetComponentInChildren<Text>();
         timer = REFRESH_CYCLE;
         rand = new System.Random();
+
+        StreamReader fileImport = new StreamReader(importFilePath); //access file at provided path
+        List<string> headlines = new List<string>(fileImport.ReadToEnd().Split('\n'));
+        headlines.Shuffle();
+        foreach (string s in headlines)
+        {
+            scrollingText.text += s + " | ";
+        }
+
+
+        fileImport.Close();
     }
 
     // Update is called once per frame
@@ -586,8 +637,8 @@ public class ScrollingTextHandler
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            scrollingText.text = scrollingText.text.Remove(0, 1); //remove first char and update text
             timer = REFRESH_CYCLE;
+            scrollingText.text = scrollingText.text.Remove(0, 1); //remove first char and update text
         }
 
         //every IMPORT_CYCLE number of chars, append new line of scrolling text

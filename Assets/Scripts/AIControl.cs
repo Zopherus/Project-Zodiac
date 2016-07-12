@@ -150,6 +150,7 @@ public class AIControl : MonoBehaviour {
             GameObject bacon = Instantiate<GameObject>(transform.FindChild("Projectile").gameObject);
             bacon.SetActive(true);
             bacon.transform.position = transform.FindChild("spawnPoint").position;
+            transform.FindChild("shootSound").GetComponent<AudioSource>().Play();
         }
 
         if (currentState.Contains(AIState.Shoot) & grounded & !direction)
@@ -160,6 +161,7 @@ public class AIControl : MonoBehaviour {
             projectile.SetActive(true);
             projectile.transform.position = transform.FindChild("spawnPoint left").position;
             transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
+            transform.FindChild("shootSound").GetComponent<AudioSource>().Play();
         }
 
         float playerX = playerCharacter.transform.position.x;
