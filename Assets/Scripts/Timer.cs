@@ -8,6 +8,8 @@ public class Timer : MonoBehaviour {
     float timeLeft; //Used to determine the amount of time remaining in the battle
     string timerText; //Used to change the text of the timer in the scene
     Text clock; //Child timer object
+    bool win;
+
 	// Use this for initialization
 	void Start () {
         timeLeft = 91f;
@@ -23,6 +25,16 @@ public class Timer : MonoBehaviour {
 
         if (timeLeft < 1)
         {
+
+            if (GameObject.Find("Player").GetComponentInChildren<Player>().popularity.CurrentVal >= GameObject.Find("Computer")
+                .GetComponentInChildren<Player>().popularity.CurrentVal)
+            {
+                win = true;
+            }
+            else
+            {
+                win = false;
+            }
             SceneManager.LoadScene(1);
         }
 	}

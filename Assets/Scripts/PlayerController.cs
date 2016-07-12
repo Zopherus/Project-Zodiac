@@ -14,15 +14,15 @@ public class PlayerController : MonoBehaviour {
 	bool direction;
 	bool moving;
 
-    //Variables related to the shooting
-    float timer = 3.0f;
-    float reload = 1.5f;
+    //Variables that restrict spamming of punching and shooting
+    float punchCD;
+    float reload;
     bool singleFire;
+
 
     //For quick access to the Player and Computer objects
     GameObject player;
     GameObject computer;
-    string activeChar = PlayerSelectScript.character;
 
     void Start()
 	{
@@ -115,29 +115,37 @@ public class PlayerController : MonoBehaviour {
             transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
         }
 
+        //Floats that determine the position of each character. Important to determining if a punch connects
+        //or not.
+        string activeChar = PlayerSelectScript.character;
+        string compChar = PlayerSelectScript.aiChar;
+
         float playerX = player.transform.FindChild(activeChar).transform.position.x;
-        float compX = computer.transform.position.x;
+        float compX = computer.transform.FindChild(compChar).transform.position.x;
 
         //Punching
-        if (Input.GetKeyDown(KeyCode.P) & direction)
+        if (Input.GetKeyDown(KeyCode.P) & direction & punchCD <= 0)
         {
             animator.SetTrigger("punch");
             if (Mathf.Abs(playerX - compX) < 10 & playerX < compX)
             {
                 computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
+                punchCD = .5f;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.P) & !direction)
+        if (Input.GetKeyDown(KeyCode.P) & !direction & punchCD >= 0)
         {
             animator.SetTrigger("punch");
             if (Mathf.Abs(playerX - compX) < 10 & playerX > compX)
             {
                 computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
+                punchCD = .5f;
             }
         }
 
         reload = reload - Time.deltaTime;
+        punchCD = punchCD - Time.deltaTime;
 
         GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
 	}

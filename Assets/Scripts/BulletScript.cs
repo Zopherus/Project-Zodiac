@@ -5,7 +5,7 @@ using System;
 public class BulletScript : MonoBehaviour {
 
     public float bulletSpeed;
-    public float timer = 3.0f;
+    public float timer = 91.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +28,7 @@ public class BulletScript : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         var name = other.transform.parent.name;
+
         Player computer = GameObject.Find(name).transform.FindChild("Health Bar").GetComponent<Player>();
         computer.popularity.CurrentVal -= 5;
         DestroyObject(this.gameObject);
