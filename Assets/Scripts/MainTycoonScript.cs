@@ -27,8 +27,8 @@ public class MainTycoonScript : MonoBehaviour
     public static float[] policyValues = new float[4];
 
     //const variables
-    public const float DAY_LENGTH = 10f; //length of 1 day in seconds
-    public const int DAYS_PER_CYCLE = 14; //number of days in each cycle
+    public const float DAY_LENGTH = 1f; //length of 1 day in seconds
+    public const int DAYS_PER_CYCLE = 1; //number of days in each cycle
 
     // Use this for initialization
     void Awake()

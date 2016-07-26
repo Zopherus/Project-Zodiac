@@ -3,26 +3,40 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
+    private const float RELOADTIME = 0.5f;
+    private const float PUNCHCD = 0.5f;
+    private const int PUNCHDAMAGE = 7;
+
+
+
+
 	//Movement variables
 	public float speed;
 	public float jump;
-	float moveVelocity;
+	private float moveVelocity;
 
 	//Boolean to see if on the ground
-	bool grounded = true;
-	Animator animator;
-	bool direction;
-	bool moving;
+	private bool grounded = true;
+	private Animator animator;
+
+    // True if right, false if left
+	public bool direction = true;
+	private bool moving;
+
+    // Restricts the left, right movement if is next to a border
+    private bool canMoveLeft = true;
+    private bool canMoveRight = true;
+
 
     //Variables that restrict spamming of punching and shooting
-    float punchCD;
-    float reload;
-    bool singleFire;
+    private float punchCD;
+    private float reload;
+    private bool singleFire;
 
 
     //For quick access to the Player and Computer objects
-    GameObject player;
-    GameObject computer;
+    private GameObject player;
+    private GameObject computer;
 
     void Start()
 	{
@@ -32,7 +46,7 @@ public class PlayerController : MonoBehaviour {
         computer = GameObject.Find("Computer");
     }
 
-	void Update () 
+	void Update ()
 	{
 
         //Up and down movement
@@ -50,13 +64,12 @@ public class PlayerController : MonoBehaviour {
 				animator.SetTrigger ("jumpLeft");
 			}
 		}
-			
 		animator.SetBool ("onGround", grounded);
-
+        animator.SetBool("direction", direction);
 		moveVelocity = 0;
 
 		//Left and right movement
-		if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+		if (canMoveLeft && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) ))
 		{
 			moveVelocity = -speed;
 
@@ -69,13 +82,13 @@ public class PlayerController : MonoBehaviour {
 			animator.SetBool ("moving", moving);
 		}
 
-		if (Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.A)) 
+		else if (Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.A)) 
 		{
 			moving = false;
 			animator.SetBool ("moving", moving);
 		}
 
-		if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+		if (canMoveRight && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
 		{
 			moveVelocity = speed;
 
@@ -88,32 +101,27 @@ public class PlayerController : MonoBehaviour {
 			animator.SetBool ("moving", moving);
 		}
 
-		if (Input.GetKeyUp (KeyCode.RightArrow) || Input.GetKeyUp (KeyCode.D)) 
+		else if (Input.GetKeyUp (KeyCode.RightArrow) || Input.GetKeyUp (KeyCode.D)) 
 		{
 			moving = false;
 			animator.SetBool ("moving", moving);
 		}
 
         //Shooting
-        if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & direction)
+        if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded)
         {
-            animator.SetTrigger("shoot");
-            GameObject projectile = Instantiate<GameObject>(transform.FindChild("Projectile").gameObject);
-            projectile.SetActive(true);
-            projectile.transform.position = transform.FindChild("spawnPoint").position;
-            reload = .5f;
-            transform.FindChild("shootSound").GetComponent<AudioSource>().Play();
-        }
 
-        if (Input.GetKeyDown(KeyCode.O) & reload < 0 & grounded & !direction)
-        {
-            transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
             animator.SetTrigger("shoot");
             GameObject projectile = Instantiate<GameObject>(transform.FindChild("Projectile").gameObject);
             projectile.SetActive(true);
-            projectile.transform.position = transform.FindChild("spawnPoint left").position;
-            reload = .5f;
-            transform.FindChild("Projectile").GetComponent<BulletScript>().bulletSpeed *= -1;
+            if (direction)
+                projectile.transform.position = transform.FindChild("spawnPoint").position;
+            else
+            {
+                projectile.transform.position = transform.FindChild("spawnPoint left").position;
+                projectile.GetComponent<BulletScript>().bulletSpeed *= -1;
+            }
+            reload = RELOADTIME;
             transform.FindChild("shootSound").GetComponent<AudioSource>().Play();
         }
 
@@ -131,35 +139,51 @@ public class PlayerController : MonoBehaviour {
             animator.SetTrigger("punch");
             if (Mathf.Abs(playerX - compX) < 10 & playerX < compX)
             {
-                computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
-                punchCD = .5f;
+                computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= PUNCHDAMAGE;
+                punchCD = PUNCHCD;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.P) & !direction & punchCD >= 0)
+        if (Input.GetKeyDown(KeyCode.P) & !direction & punchCD <= 0)
         {
             animator.SetTrigger("punch");
             if (Mathf.Abs(playerX - compX) < 10 & playerX > compX)
             {
-                computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= 7;
-                punchCD = .5f;
+                computer.transform.FindChild("Health Bar").GetComponent<Player>().popularity.CurrentVal -= PUNCHDAMAGE;
+                punchCD = PUNCHCD;
             }
         }
 
         reload = reload - Time.deltaTime;
         punchCD = punchCD - Time.deltaTime;
 
-        GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(moveVelocity, GetComponent<Rigidbody2D>().velocity.y);
 	}
 
 	//Method to check if character is on the ground
-	void OnTriggerEnter2D()
+	void OnTriggerEnter2D(Collider2D other)
 	{
-		grounded = true;
+        if (other.ToString() == "Ground (UnityEngine.BoxCollider2D)")
+        {
+            grounded = true;
+        }
+        else if (other.ToString() == "Left Border (UnityEngine.EdgeCollider2D)")
+        {
+            canMoveLeft = false;
+        }
+        else if (other.ToString() == "Right Border (UnityEngine.EdgeCollider2D)")
+            canMoveRight = false;
 	}
 
-	void OnTriggerExit2D()
+	void OnTriggerExit2D(Collider2D other)
 	{
-		grounded = false;
+        if (other.ToString() == "Ground (UnityEngine.BoxCollider2D)")
+		    grounded = false;
+        else if (other.ToString() == "Left Border (UnityEngine.EdgeCollider2D)")
+        {
+            canMoveLeft = true;
+        }
+        else if (other.ToString() == "Right Border (UnityEngine.EdgeCollider2D)")
+            canMoveRight = true;
 	}
 }

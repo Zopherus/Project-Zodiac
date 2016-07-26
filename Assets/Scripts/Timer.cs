@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        timeLeft = 91f;
+        timeLeft = 99f;
         clock = GetComponent<Text>();
 	}
 	
@@ -25,7 +25,6 @@ public class Timer : MonoBehaviour {
 
         if (timeLeft < 1)
         {
-
             if (GameObject.Find("Player").GetComponentInChildren<Player>().popularity.CurrentVal >= GameObject.Find("Computer")
                 .GetComponentInChildren<Player>().popularity.CurrentVal)
             {
@@ -35,7 +34,7 @@ public class Timer : MonoBehaviour {
             {
                 win = false;
             }
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("Scenes/TycoonScene");
         }
 	}
 }

@@ -62,10 +62,10 @@ public class AIControl : MonoBehaviour {
         #region Update CurrentState
         currentState.Clear();
         float distanceFromPlayer = Math.Abs(playerCharacter.transform.position.x - transform.position.x);
-        Debug.Log(distanceFromPlayer);
+        //Debug.Log(distanceFromPlayer);
 
-        if(playerCharacter.transform.position.x < transform.position.x & direction) { direction = false; }
-        if(playerCharacter.transform.position.x > transform.position.x & !direction) { direction = true; }
+        if (playerCharacter.transform.position.x < transform.position.x & direction) { direction = false; }
+        if (playerCharacter.transform.position.x > transform.position.x & !direction) { direction = true; }
         animator.SetBool("direction", direction);
         stateTimer -= Time.deltaTime; //update stateTimer
         if (distanceFromPlayer > 15) //keep player relatively close to player
@@ -109,7 +109,7 @@ public class AIControl : MonoBehaviour {
         //Left and right movement
 
         //left
-        if ((currentState.Contains(AIState.WalkBack) & direction) || (currentState.Contains(AIState.WalkForward) & !direction))
+        if ((currentState.Contains(AIState.WalkBack) && direction) || (currentState.Contains(AIState.WalkForward) && !direction))
         {
             moveVelocity = -speed;
 
@@ -123,7 +123,7 @@ public class AIControl : MonoBehaviour {
         }
 
         //right
-        if ((currentState.Contains(AIState.WalkBack) & !direction) || (currentState.Contains(AIState.WalkForward) & direction))
+        if ((currentState.Contains(AIState.WalkBack) && !direction) || (currentState.Contains(AIState.WalkForward) && direction))
         {
             moveVelocity = speed;
 

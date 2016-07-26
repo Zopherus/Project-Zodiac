@@ -4,8 +4,6 @@ using System;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
-
-    SceneManager sm = new SceneManager();
     
     [SerializeField]
     public Stats popularity;
@@ -13,8 +11,9 @@ public class Player : MonoBehaviour {
     public void Awake()
     {
         popularity.Initialize(transform.parent.name);
-        GameObject.Find("BackgroundMusic").GetComponent<AudioSource>().Stop();
+        //GameObject.Find("BackgroundMusic").GetComponent<AudioSource>().Stop();
     }
+
 	// Update is called once per frame
 	void Update ()
     {
@@ -30,7 +29,7 @@ public class Player : MonoBehaviour {
             {
                 MainTycoonScript.states[PopularityManager.currentState].won = false;
             }
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("Scenes/TycoonScene");
         }
     }
 }
