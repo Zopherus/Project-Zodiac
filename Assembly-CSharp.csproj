@@ -50,7 +50,6 @@
      <Compile Include="Assets\Scripts\BarScript.cs" />
      <Compile Include="Assets\Scripts\BulletScript.cs" />
      <Compile Include="Assets\Scripts\MainMenuScript.cs" />
-     <Compile Include="Assets\Scripts\MainTycoonScript.cs" />
      <Compile Include="Assets\Scripts\MusicScript.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
@@ -59,6 +58,8 @@
      <Compile Include="Assets\Scripts\RayCastButtonScript.cs" />
      <Compile Include="Assets\Scripts\Stats.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
+     <Compile Include="Assets\Scripts\TycoonScene\MainTycoonScript.cs" />
+     <Compile Include="Assets\Scripts\TycoonScene\ScrollingText.cs" />
      <None Include="Assets\SaveData\ScrollingText.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

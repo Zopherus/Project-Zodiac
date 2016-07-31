@@ -16,7 +16,7 @@ public class MainTycoonScript : MonoBehaviour
     //class instances
     private static CalendarHandler calendar;
     public static EventHandler events;
-    private ScrollingTextHandler scrollingText;
+    //private ScrollingTextHandler scrollingText;
     //variables
     static public Character currentCharacter;
     public bool timeIsActive = true; //whether or not time goes by (ex. settings)
@@ -27,8 +27,8 @@ public class MainTycoonScript : MonoBehaviour
     public static float[] policyValues = new float[4];
 
     //const variables
-    public const float DAY_LENGTH = 1f; //length of 1 day in seconds
-    public const int DAYS_PER_CYCLE = 1; //number of days in each cycle
+    public const float DAY_LENGTH = 10f; //length of 1 day in seconds
+    public const int DAYS_PER_CYCLE = 10; //number of days in each cycle
 
     // Use this for initialization
     void Awake()
@@ -39,7 +39,7 @@ public class MainTycoonScript : MonoBehaviour
             Text[] components = transform.FindChild("Canvas").FindChild("Calendar").GetComponentsInChildren<Text>(); //get text components
             calendar = new CalendarHandler(this, DAY_LENGTH, components[0], components[1]);
             events = new EventHandler(DAY_LENGTH);
-            scrollingText = new ScrollingTextHandler(this);
+            //scrollingText = new ScrollingTextHandler(this);
             highlightText = GameObject.Find("HighlightText").GetComponent<Text>();
             stateText = GameObject.Find("StateText").GetComponent<Text>();
             System.Random r = new System.Random(); //seed rng outside of loop (otherwise, each rng will be seeded with the same or close to the same values -> not random AT ALL)
@@ -76,7 +76,7 @@ public class MainTycoonScript : MonoBehaviour
             calendar.sceneTimerDays = GameObject.Find("DaysUntil").gameObject.GetComponent<Text>();
             calendar.calendarDayText = GameObject.Find("DayText").GetComponent<Text>();
             calendar.calendarMonthText = GameObject.Find("MonthText").GetComponent<Text>();
-            scrollingText = new ScrollingTextHandler(this);
+            //scrollingText = new ScrollingTextHandler(this);
             highlightText = GameObject.Find("HighlightText").GetComponent<Text>();
             stateText = GameObject.Find("StateText").GetComponent<Text>();
             changeState(PopularityManager.currentState); //display first state
@@ -130,7 +130,6 @@ public class MainTycoonScript : MonoBehaviour
             }
 
             //reinitialize all variables
-
         }
     }
 
@@ -149,7 +148,7 @@ public class MainTycoonScript : MonoBehaviour
                 SceneManager.LoadScene("Fighting Scene");
             }
             calendar.UpdateCalendar();
-            scrollingText.UpdateScrollingText();
+            //scrollingText.UpdateScrollingText();
         }
     }
 
@@ -601,8 +600,8 @@ public class EventHandler
 }
 #endregion
 
-#region ScrollingTextHandlerClass
-public class ScrollingTextHandler
+/*#region ScrollingTextHandlerClass
+public class ScrollingTextHandler : MonoBehaviour
 {
     private Text scrollingText; //child text object
     private float timer;
@@ -625,8 +624,6 @@ public class ScrollingTextHandler
         {
             scrollingText.text += s + " | ";
         }
-
-
         fileImport.Close();
     }
 
@@ -657,7 +654,7 @@ public class ScrollingTextHandler
         }
     }
 }
-#endregion
+#endregion*/
 
 #region State Struct
 public struct State
